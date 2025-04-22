@@ -17,9 +17,9 @@ public class ForceThemeMusicTweak(ILogger<Tweak> logger) : Tweak(Name, _files)
     [
         new TweakFile(Paths.MainJs!,
         [
-             // Searching for: "enableThemeSongs", !1), !1);
+             // Searching for: this.get("enableThemeSongs",!1),!1);
              // Replace !1 with !0 if checked
-            new TweakSearching("\"enableThemeSongs\",", "), !1);")
+            new TweakSearching("this.get(\"enableThemeSongs\",!1),", ");")
         ])
     ];
 
