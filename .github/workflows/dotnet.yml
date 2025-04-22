@@ -10,25 +10,26 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-    
+
     - name: Checkout
       uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    
+
     - name: Install .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 8.0.x
-    
+
     - name: Dependencies
       run: dotnet restore
-    
+
     - name: Build
       run: dotnet build --configuration release
-    
-    - name: Upload
+
+    - name: Upload build artifact
       uses: actions/upload-artifact@v4
       with:
-        artifacts: Jellyfin.Plugin.JellyTweaks
-        path: Jellyfin.Plugin.JellyTweaks/bin/*/*/Jellyfin.Plugin.JellyTweaks.dll
+        name: JellyFin.Tweaks.Plugin
+        path: Jellyfin.Plugin.JellyTweaks/bin/Release/Jellyfin.Plugin.JellyTweaks.dll
+        if-no-files-found: error
