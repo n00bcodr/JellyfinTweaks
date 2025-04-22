@@ -1,0 +1,61 @@
+[
+    {
+        "name": "Jellyfin Tweaks ",
+        "guid": "dfee3828-01df-49df-85b1-5c2b75e5ea1a",
+        "description": "Adds useful tweaks to Jellyfin. Based on the original JellyTweaks by gam24.",
+        "overview": "Tweaks for Jellyfin",
+        "owner": "n00bcodr",
+        "category": "General",
+        "imageUrl": "https://raw.githubusercontent.com/n00bcodr/JellyfinTweaks/master/Jellyfin.Plugin.JellyTweaks/images/thumb.png",
+        "versions": [
+            {
+                "checksum": "52d10ad6e087c24aa54e83a7e385de1076d62f6159edcccd32de065ecf0e5372",
+                "changelog": "- Added Max Days Next Up\n- Added Force Disable Next Video Info\n- Added Force Theme Music\n- Based on gam24's version 1.0.0.4",
+                "targetAbi": "10.9.4.0",
+                "sourceUrl": "https://github.com/n00bcodr/JellyfinTweaks/releases/download/1.1.0/JellyfinTweaks.Plugin.zip",
+                "timestamp": "YOUR_TIMESTAMP",
+                "version": "1.1.0"
+            },
+            {
+                "checksum": "025fee84c36e0146ed8c8c59c93e933f",
+                "changelog": "- Fixed bug with apply tweeks",
+                "targetAbi": "10.9.4.0",
+                "sourceUrl": "https://github.com/gaam24/JellyTweaks/releases/download/1.0.0.4/Jellyfin.Plugin.JellyTweaks.zip",
+                "timestamp": "2024-06-07T00:00:00Z",
+                "version": "1.0.0.4"
+            },
+            {
+                "checksum": "5fb9f1715d69a2061d84fde2e2a12c42",
+                "changelog": " - Fixed enableBackdrops by default\n - Update to .NET 8.0\n - Code cleanup",
+                "targetAbi": "10.9.4.0",
+                "sourceUrl": "https://github.com/gaam24/JellyTweaks/releases/download/1.0.0.3/Jellyfin.Plugin.JellyTweaks.zip",
+                "timestamp": "2024-06-03T00:00:00Z",
+                "version": "1.0.0.3"
+            },
+            {
+                "checksum": "41d9555a72b9cf6fe9abdcefa4ba9b5a",
+                "changelog": " - Fix CultureInfo",
+                "targetAbi": "10.8.9.0",
+                "sourceUrl": "https://github.com/gaam24/JellyTweaks/releases/download/1.0.0.2/Jellyfin.Plugin.JellyTweaks.zip",
+                "timestamp": "2023-04-24T00:00:00Z",
+                "version": "1.0.0.2"
+            },
+            {
+                "checksum": "ac7206b63ee2ca9361c765ce15226800",
+                "changelog": " - Rebuilded tweak searching (now using all tweaks for one file saving the file only once)\n - Added descriptions in options\n - Small code cleanup",
+                "targetAbi": "10.8.9.0",
+                "sourceUrl": "https://github.com/gaam24/JellyTweaks/releases/download/1.0.0.1/Jellyfin.Plugin.JellyTweaks.zip",
+                "timestamp": "2023-02-28T00:00:00Z",
+                "version": "1.0.0.1"
+            },
+            {
+                "checksum": "a2ac74f5e84bfdb6a6cd7c8648e5e161",
+                "changelog": "Initial release",
+                "targetAbi": "10.8.9.0",
+                "sourceUrl": "https://github.com/gaam24/JellyTweaks/releases/download/1.0.0.0/Jellyfin.Plugin.JellyTweaks.zip",
+                "timestamp": "2023-02-27T00:00:00Z",
+                "version": "1.0.0.0"
+            }
+        ]
+    }
+]
