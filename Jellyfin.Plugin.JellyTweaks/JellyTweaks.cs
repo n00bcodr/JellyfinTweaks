@@ -29,7 +29,7 @@ public class JellyTweaks : BasePlugin<PluginConfiguration>, IHasWebPages
     }
 
     /// <inheritdoc />
-    public override string Name => "JellyTweaks";
+    public override string Name => "Jellyfin Tweaks";
 
     /// <inheritdoc />
     public override Guid Id => Guid.Parse("dfee3828-01df-49df-85b1-5c2b75e5ea1a");
