@@ -9,6 +9,14 @@
         "imageUrl": "https://raw.githubusercontent.com/n00bcodr/JellyfinTweaks/master/Jellyfin.Plugin.JellyTweaks/images/thumb.png",
         "versions": [
             {
+                "checksum": "f7515430b1b7f455c0f40aaec1f34e27",
+                "changelog": "-Fix logic for Force theme music",
+                "targetAbi": "10.9.4.0",
+                "sourceUrl": "https://github.com/n00bcodr/JellyfinTweaks/releases/download/1.1.2/JellyFin.Tweaks.Plugin.zip",
+                "timestamp": "2025-04-23T03:48:01Z",
+                "version": "1.1.2"
+            },
+            {
                 "checksum": "7ae1d358517b008fc32b8dccb8dc13ac",
                 "changelog": "- Added Max Days Next Up\n- Added Force Disable Next Video Info\n- Added Force Theme Music\n- Based on gam24's version 1.0.0.4",
                 "targetAbi": "10.9.4.0",
