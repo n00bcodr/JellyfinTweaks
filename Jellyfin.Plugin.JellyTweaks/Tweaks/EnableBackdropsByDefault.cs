@@ -13,13 +13,15 @@ public class EnableBackdropsByDefault(ILogger<Tweak> logger) : Tweak(Name, _file
     private static readonly Collection<TweakFile> _files =
     [
         new TweakFile(Paths.MainJs!, [
-            new TweakSearching("enableBackdrops:function(){return ", "}")
+            new TweakSearching(
+                "value:function(e){return void 0!==e?this.set(\"enableBackdrops\",e.toString(),!1):(0,i.G4)(this.get(\"enableBackdrops\",",
+                "))},")
         ])
     ];
 
     public override async Task Execute(PluginConfiguration configuration)
     {
-        var value = configuration.EnableBackdropsByDefault ? "P" : "_";
+        var value = configuration.EnableBackdropsByDefault ? "!0),!0" : "!1),!1";
         await TweakUtils.ApplyTweakAsync(logger, this, value).ConfigureAwait(false);
     }
 }

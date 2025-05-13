@@ -10,21 +10,21 @@ public class ForceThemeMusicTweak(ILogger<Tweak> logger) : Tweak(Name, _files)
 {
     private new const string Name = "ForceEnableThemeMusic";
 
-    // NOTE: These markers target main.jellyfin.bundle.js
-    // Start marker ends just BEFORE the '!1'. End marker starts just AFTER it.
-    // Replacement value will be '!0' (or '!1' to revert).
+    // Changes start here:
     private static readonly Collection<TweakFile> _files =
     [
         new TweakFile(Paths.MainJs!,
         [
-            // Find: enableThemeSongs:function(){return j}
-            new TweakSearching("enableThemeSongs:function(){return ", "}")
+            new TweakSearching(
+                "enableThemeSongs:function(){return(0,i.G4)(this.get(\"enableThemeSongs\",",
+                "))}}"
+            )
         ])
     ];
 
     public override async Task Execute(PluginConfiguration configuration)
     {
-        var value = configuration.ForceEnableThemeMusic ? "!0" : "j"; // Use !0 for true, j for original
+        var value = configuration.ForceEnableThemeMusic ? "!0),!0" : "!1),!1";
         await TweakUtils.ApplyTweakAsync(logger, this, value).ConfigureAwait(false);
     }
 }

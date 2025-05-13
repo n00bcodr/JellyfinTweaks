@@ -11,15 +11,15 @@
             <form id="JellyTweaksForm">
 
                 <div class="inputContainer">
-                    <label class="inputLabel inputLabelUnfocused" for="DefaultTitle">Default title</label>
+                    <label class="inputLabel inputLabelUnfocused" for="DefaultTitle">Default Page Title</label>
                     <input id="DefaultTitle" is="emby-input" name="DefaultTitle" type="text"/>
-                    <div class="fieldDescription">Default value 'Jellyfin'</div>
+                    <div class="fieldDescription">Default value 'Jellyfin'.</div>
                 </div>
 
                 <div class="inputContainer">
-                    <label class="inputLabel inputLabelUnfocused" for="DefaultLibraryPageSize">Default page size</label>
+                    <label class="inputLabel inputLabelUnfocused" for="DefaultLibraryPageSize">Default Page Size</label>
                     <input id="DefaultLibraryPageSize" is="emby-input" min="0" name="DefaultLibraryPageSize" type="number"/>
-                    <div class="fieldDescription">Default value '100'</div>
+                    <div class="fieldDescription">Default value '100'. Set to 0 in order to disable paging.</div>
                 </div>
 
                 <div class="inputContainer">
@@ -33,6 +33,7 @@
                         <input id="EnableBackdropsByDefault" is="emby-checkbox" name="EnableBackdropsByDefault" type="checkbox"/>
                         <span>Enable backdrops by default</span>
                     </label>
+                     <div class="fieldDescription">Display the backdrops in the background of some pages while browsing the library.</div>
                 </div>
 
                 <div class="checkboxContainer checkboxContainer-withDescription">
