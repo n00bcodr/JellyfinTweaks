@@ -9,6 +9,14 @@
         "imageUrl": "https://raw.githubusercontent.com/n00bcodr/JellyfinTweaks/master/Jellyfin.Plugin.JellyTweaks/images/thumb.png",
         "versions": [
             {
+                "checksum": "992b5104c0334a19e2f9601540580b9a",
+                "changelog": "-Fix logic for Force theme music and backdrops",
+                "targetAbi": "10.9.4.0",
+                "sourceUrl": "https://github.com/n00bcodr/JellyfinTweaks/releases/download/1.1.3.0/JellyFin.Tweaks.Plugin.zip",
+                "timestamp": "2025-05-13T15:23:30Z",
+                "version": "1.1.3.0"
+            },
+            {
                 "checksum": "f7515430b1b7f455c0f40aaec1f34e27",
                 "changelog": "-Fix logic for Force theme music",
                 "targetAbi": "10.9.4.0",
