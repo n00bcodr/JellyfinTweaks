@@ -12,41 +12,22 @@ public class PluginConfiguration : BasePluginConfiguration
     /// </summary>
     public PluginConfiguration()
     {
-        EnableBackdropsByDefault = false;
         DefaultLibraryPageSize = 100;
-        DefaultTitle = "Jellyfin";
         MaxDaysNextUp = 365;
-        ForceDisableNextVideoInfo = false;
+        EnableBackdropsByDefault = false;
         ForceEnableThemeMusic = false;
+        ForceEnableThemeVideos = false;
+        ForceDisableNextVideoInfo = false;
+        ForceEnableRewatchingInNextUp = false;
+        ForceEnableEpisodeImagesInNextUp = false;
     }
 
-    /// <summary>
-    ///     Gets or sets a value of default title.
-    /// </summary>
-    public string DefaultTitle { get; set; }
-
-    /// <summary>
-    ///     Gets or sets a value indicating whether backdrops is enabled by default.
-    /// </summary>
-    public bool EnableBackdropsByDefault { get; set; }
-
-    /// <summary>
-    ///     Gets or sets a value of default page size.
-    /// </summary>
     public int DefaultLibraryPageSize { get; set; }
-
-    /// <summary>
-    /// Gets or sets the maximum days items stay in Next Up. Null means use default.
-    /// </summary>
     public int? MaxDaysNextUp { get; set; }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether to force disable the next video info overlay.
-    /// </summary>
-    public bool ForceDisableNextVideoInfo { get; set; }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether to force enable theme music.
-    /// </summary>
+    public bool EnableBackdropsByDefault { get; set; }
     public bool ForceEnableThemeMusic { get; set; }
+    public bool ForceEnableThemeVideos { get; set; }
+    public bool ForceDisableNextVideoInfo { get; set; }
+    public bool ForceEnableRewatchingInNextUp { get; set; }
+    public bool ForceEnableEpisodeImagesInNextUp { get; set; }
 }

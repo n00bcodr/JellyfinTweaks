@@ -13,9 +13,12 @@
     <PackageReference Include="Jellyfin.Model" Version="10.9.4"/>
   </ItemGroup>
 
+
   <ItemGroup>
     <None Remove="Configuration\configPage.html"/>
     <EmbeddedResource Include="Configuration\configPage.html"/>
+    <None Remove="Configuration\applyTweaks.js"/>
+    <EmbeddedResource Include="Configuration\applyTweaks.js"/>
   </ItemGroup>
 
 </Project>

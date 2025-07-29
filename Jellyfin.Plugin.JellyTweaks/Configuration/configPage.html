@@ -2,57 +2,86 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JellyTweaks</title>
+    <title>Jellyfin Tweaks</title>
 </head>
 <body>
 <div class="page type-interior pluginConfigurationPage" data-require="emby-input,emby-checkbox" data-role="page" id="JellyTweaksPage">
     <div data-role="content">
         <div class="content-primary">
+            <div class="verticalSection">
+                <div class="sectionTitleContainer">
+                    <h2 class="sectionTitle">Jellyfin Tweaks</h2>
+                </div>
+            </div>
+
             <form id="JellyTweaksForm">
-
+                <!-- Input for DefaultLibraryPageSize -->
                 <div class="inputContainer">
-                    <label class="inputLabel inputLabelUnfocused" for="DefaultTitle">Default Page Title</label>
-                    <input id="DefaultTitle" is="emby-input" name="DefaultTitle" type="text"/>
-                    <div class="fieldDescription">Default value 'Jellyfin'.</div>
-                </div>
-
-                <div class="inputContainer">
-                    <label class="inputLabel inputLabelUnfocused" for="DefaultLibraryPageSize">Default Page Size</label>
+                    <label class="inputLabel inputLabelUnfocused" for="DefaultLibraryPageSize">Default Library Page Size</label>
                     <input id="DefaultLibraryPageSize" is="emby-input" min="0" name="DefaultLibraryPageSize" type="number"/>
-                    <div class="fieldDescription">Default value '100'. Set to 0 in order to disable paging.</div>
+                    <div class="fieldDescription">Override the amount of items to show on a library page. Set to 0 in order to disable paging.</div>
                 </div>
-
+                <!-- Input for MaxDaysNextUp -->
                 <div class="inputContainer">
-                    <label class="inputLabel inputLabelUnfocused" for="MaxDaysNextUp">Max Days For Next Up</label>
+                    <label class="inputLabel inputLabelUnfocused" for="MaxDaysNextUp">Max Days in 'Next Up'</label>
                     <input id="MaxDaysNextUp" is="emby-input" min="0" name="MaxDaysNextUp" type="number" />
-                    <div class="fieldDescription">Default value is 365. Set 0 to disable limit. Leave blank to use default.</div>
+                    <div class="fieldDescription">Default value is 365. Set 0 to disable limit. Leave blank to set it to user selected.</div>
                 </div>
-
+                <!-- Checkbox for EnableBackdropsByDefault -->
                 <div class="checkboxContainer checkboxContainer-withDescription">
                     <label class="emby-checkbox-label">
                         <input id="EnableBackdropsByDefault" is="emby-checkbox" name="EnableBackdropsByDefault" type="checkbox"/>
-                        <span>Enable backdrops by default</span>
+                        <span>Enable Backdrops by default</span>
                     </label>
-                     <div class="fieldDescription">Display the backdrops in the background of some pages while browsing the library.</div>
+                     <div class="fieldDescription">Display the backdrops in the background of some pages while browsing the library by default for all users</div>
                 </div>
-
+                <!-- Checkbox for ForceEnableThemeMusic -->
+                <div class="checkboxContainer checkboxContainer-withDescription">
+                    <label class="emby-checkbox-label">
+                        <input id="ForceEnableThemeMusic" is="emby-checkbox" name="ForceEnableThemeMusic" type="checkbox"/>
+                        <span>Force enable "Theme Songs" for all users</span>
+                    </label>
+                    <div class="fieldDescription">Override the setting to Play the theme songs in background while browsing the library for all users</div>
+                </div>
+                <!-- Checkbox for ForceEnableThemeVideos -->
+                <div class="checkboxContainer checkboxContainer-withDescription">
+                    <label class="emby-checkbox-label">
+                        <input id="ForceEnableThemeVideos" is="emby-checkbox" name="ForceEnableThemeVideos" type="checkbox"/>
+                        <span>Force enable "Theme Videos" for all users</span>
+                    </label>
+                    <div class="fieldDescription">Override the setting to Play theme videos in the background while browsing the library for all users.</div>
+                </div>
+                <!-- Checkbox for ForceDisableNextVideoInfo -->
                 <div class="checkboxContainer checkboxContainer-withDescription">
                     <label class="emby-checkbox-label">
                         <input id="ForceDisableNextVideoInfo" is="emby-checkbox" name="ForceDisableNextVideoInfo" type="checkbox"/>
                         <span>Force disable "Show next video info during playback" for all users</span>
                     </label>
-                     <div class="fieldDescription">Overrides user setting to prevent conflict with Intro Skipper.</div>
+                     <div class="fieldDescription">At the end of a video, display info about the next video coming up in the current playlist.</div>
                 </div>
-
+                <!-- Checkbox for ForceEnableRewatchingInNextUp -->
                 <div class="checkboxContainer checkboxContainer-withDescription">
                     <label class="emby-checkbox-label">
-                        <input id="ForceEnableThemeMusic" is="emby-checkbox" name="ForceEnableThemeMusic" type="checkbox"/>
-                        <span>Force enable Theme Music for all users</span>
+                        <input id="ForceEnableRewatchingInNextUp" is="emby-checkbox" name="ForceEnableRewatchingInNextUp" type="checkbox"/>
+                        <span>Force enable "Rewatching in Next Up"</span>
                     </label>
-                    <div class="fieldDescription">Overrides user setting to ensure theme music plays.</div>
+                    <div class="fieldDescription">Override the setting to enable showing already watched episodes in 'Next Up' sections all users.</div>
                 </div>
-
-                <div>
+                <!-- Checkbox for ForceEnableEpisodeImagesInNextUp -->
+                <div class="checkboxContainer checkboxContainer-withDescription">
+                    <label class="emby-checkbox-label">
+                        <input id="ForceEnableEpisodeImagesInNextUp" is="emby-checkbox" name="ForceEnableEpisodeImagesInNextUp" type="checkbox"/>
+                        <span>Force enable "Use episode images in 'Next Up' and 'Continue Watching' sections"</span>
+                    </label>
+                    <div class="fieldDescription">'Next Up' and 'Continue Watching' sections will use episode images as thumbnails instead of the primary thumbnail of the show for all users</div>
+                </div>
+                <br>
+                <!-- Info Box -->
+                <div class="infoBox">
+                    <p class="infoBoxText">
+                        <strong>ℹ️</strong> Changes require a page refresh to take effect.
+                    </p>
+                </div>
                     <button class="raised button-submit block emby-button" is="emby-button" type="submit">
                         <span>Save</span>
                     </button>
@@ -61,42 +90,62 @@
             </form>
         </div>
     </div>
-    <script type="text/javascript">
-        const JellyTweaksConfig = {
-            pluginUniqueId: 'dfee3828-01df-49df-85b1-5c2b75e5ea1a'
-        };
+<script type="text/javascript">
+        (() => {
+            const pluginId = 'dfee3828-01df-49df-85b1-5c2b75e5ea1a';
+            const page = document.querySelector('#JellyTweaksPage');
+            const form = document.querySelector('#JellyTweaksForm');
 
-        document.querySelector('#JellyTweaksPage').addEventListener('pageshow', function () {
-            Dashboard.showLoadingMsg();
-            ApiClient.getPluginConfiguration(JellyTweaksConfig.pluginUniqueId).then(function (config) {
-                document.querySelector('#DefaultTitle').value = config.DefaultTitle;
-                document.querySelector('#EnableBackdropsByDefault').checked = config.EnableBackdropsByDefault;
-                document.querySelector('#DefaultLibraryPageSize').value = config.DefaultLibraryPageSize;
-                document.querySelector('#MaxDaysNextUp').value = config.MaxDaysNextUp ?? '';
-                Dashboard.hideLoadingMsg();
-                document.querySelector('#ForceDisableNextVideoInfo').checked = config.ForceDisableNextVideoInfo;
-                document.querySelector('#ForceEnableThemeMusic').checked = config.ForceEnableThemeMusic;
-            });
-        });
-
-        document.querySelector('#JellyTweaksForm').addEventListener('submit', function (e) {
-            Dashboard.showLoadingMsg();
-            ApiClient.getPluginConfiguration(JellyTweaksConfig.pluginUniqueId).then(function (config) {
-                config.DefaultTitle = document.querySelector('#DefaultTitle').value;
-                config.EnableBackdropsByDefault = document.querySelector('#EnableBackdropsByDefault').checked;
-                config.DefaultLibraryPageSize = document.querySelector('#DefaultLibraryPageSize').value;
-                config.MaxDaysNextUp = document.querySelector('#MaxDaysNextUp').value === '' ? null : parseInt(document.querySelector('#MaxDaysNextUp').value, 10);
-                config.ForceDisableNextVideoInfo = document.querySelector('#ForceDisableNextVideoInfo').checked;
-                config.ForceEnableThemeMusic = document.querySelector('#ForceEnableThemeMusic').checked;
-
-                ApiClient.updatePluginConfiguration(JellyTweaksConfig.pluginUniqueId, config).then(function (result) {
-                    Dashboard.processPluginConfigurationUpdateResult(result);
+            // Function to load the configuration from the server
+            function loadConfig() {
+                Dashboard.showLoadingMsg();
+                ApiClient.getPluginConfiguration(pluginId).then((config) => {
+                    // Populate form fields with the loaded configuration
+                    document.querySelector('#DefaultLibraryPageSize').value = config.DefaultLibraryPageSize;
+                    document.querySelector('#MaxDaysNextUp').value = config.MaxDaysNextUp ?? '';
+                    document.querySelector('#EnableBackdropsByDefault').checked = config.EnableBackdropsByDefault;
+                    document.querySelector('#ForceEnableThemeMusic').checked = config.ForceEnableThemeMusic;
+                    document.querySelector('#ForceEnableThemeVideos').checked = config.ForceEnableThemeVideos;
+                    document.querySelector('#ForceDisableNextVideoInfo').checked = config.ForceDisableNextVideoInfo;
+                    document.querySelector('#ForceEnableRewatchingInNextUp').checked = config.ForceEnableRewatchingInNextUp;
+                    document.querySelector('#ForceEnableEpisodeImagesInNextUp').checked = config.ForceEnableEpisodeImagesInNextUp;
+                    Dashboard.hideLoadingMsg();
                 });
-            });
+            }
 
-            e.preventDefault();
-            return false;
-        });
+            // Function to save the configuration
+            function saveConfig(e) {
+                e.preventDefault();
+                Dashboard.showLoadingMsg();
+                // Build the configuration object from the form fields
+                const config = {
+                    DefaultLibraryPageSize: parseInt(document.querySelector('#DefaultLibraryPageSize').value, 10) || 0,
+                    MaxDaysNextUp: document.querySelector('#MaxDaysNextUp').value === '' ? null : parseInt(document.querySelector('#MaxDaysNextUp').value, 10),
+                    EnableBackdropsByDefault: document.querySelector('#EnableBackdropsByDefault').checked,
+                    ForceEnableThemeMusic: document.querySelector('#ForceEnableThemeMusic').checked,
+                    ForceEnableThemeVideos: document.querySelector('#ForceEnableThemeVideos').checked,
+                    ForceDisableNextVideoInfo: document.querySelector('#ForceDisableNextVideoInfo').checked,
+                    ForceEnableRewatchingInNextUp: document.querySelector('#ForceEnableRewatchingInNextUp').checked,
+                    ForceEnableEpisodeImagesInNextUp: document.querySelector('#ForceEnableEpisodeImagesInNextUp').checked
+                };
+
+                // Update the plugin configuration on the server
+                ApiClient.updatePluginConfiguration(pluginId, config)
+                    .then((result) => {
+                        Dashboard.processPluginConfigurationUpdateResult(result);
+                    })
+                    .catch(() => {
+                        Dashboard.hideLoadingMsg(); // Ensure loading message is hidden on error
+                    });
+
+                return false;
+            }
+
+            // Attach event listeners
+            page.addEventListener('pageshow', loadConfig);
+            form.addEventListener('submit', saveConfig);
+
+        })();
     </script>
 </div>
 </body>
