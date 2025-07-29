@@ -1,6 +1,6 @@
 [
     {
-        "name": "Jellyfin Tweaks ",
+        "name": "Jellyfin Tweaks",
         "guid": "dfee3828-01df-49df-85b1-5c2b75e5ea1a",
         "description": "Adds useful tweaks to Jellyfin. Based on the original JellyTweaks by gam24.",
         "overview": "Tweaks for Jellyfin",
