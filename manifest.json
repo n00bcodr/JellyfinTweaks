@@ -9,6 +9,14 @@
         "imageUrl": "https://raw.githubusercontent.com/n00bcodr/JellyfinTweaks/master/Jellyfin.Plugin.JellyTweaks/images/thumb.png",
         "versions": [
             {
+                "checksum": "9e7abde23bdfc28ea1f4975f9091d76c",
+                "changelog": "- Complete refactor to use localStorage, no longer modifies core files.\n- Added options for Theme Videos, Rewatching, and Episode Images in Next Up.",
+                "targetAbi": "10.9.4.0",
+                "sourceUrl": "https://github.com/n00bcodr/JellyfinTweaks/releases/download/2.0.0.0/JellyFin.Tweaks.Plugin.zip",
+                "timestamp": "2025-05-13T16:00:30Z",
+                "version": "2.0.0.0"
+            },
+            {
                 "checksum": "8230646cb5c0dec3e92824999ea283eb",
                 "changelog": "-Fix logic for Force theme music and backdrops",
                 "targetAbi": "10.9.4.0",
