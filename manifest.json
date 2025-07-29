@@ -9,7 +9,7 @@
         "imageUrl": "https://raw.githubusercontent.com/n00bcodr/JellyfinTweaks/master/Jellyfin.Plugin.JellyTweaks/images/thumb.png",
         "versions": [
             {
-                "checksum": "9e7abde23bdfc28ea1f4975f9091d76c",
+                "checksum": "29622399261e493ce33e2a24296ef76e",
                 "changelog": "- Complete refactor to use localStorage, no longer modifies core files.\n- Added options for Theme Videos, Rewatching, and Episode Images in Next Up.",
                 "targetAbi": "10.9.4.0",
                 "sourceUrl": "https://github.com/n00bcodr/JellyfinTweaks/releases/download/2.0.0.0/JellyFin.Tweaks.Plugin.zip",
