@@ -12,7 +12,7 @@ Jellyfin Tweaks - Jellyfin Plugin
 ## About
 A simple plugin that adds useful features, this is built on top of [gaam24/JellyTweaks](https://github.com/gaam24/JellyTweaks/) with more tweaks from [jellyfin-mods](https://github.com/BobHasNoSoul/jellyfin-mods)
 
-## Tweaks
+## 🔧Tweaks
 * Change default library page size
 * Change Max Days for Next Up for all users
 * Force Enable / Disable backdrops by default
@@ -30,7 +30,27 @@ A simple plugin that adds useful features, this is built on top of [gaam24/Jelly
 * ~~If user doesn't have the appropriate permissions, the plugin will not be able to change the settings.~~
 
 
-## Installation
-1. Add "https://raw.githubusercontent.com/n00bcodr/JellyfinTweaks/main/manifest.json" to Jellyfin plugin repository
-2. Install JellyfinTweaks from the repository
-3. Restart the Jellyfin server
+## ⚙️ Installation
+
+1.  In Jellyfin, go to **Dashboard** > **Plugins** > **Catalog** > ⚙️
+2.  Click **➕** and give the repository a name (e.g., "Jellfin Tweaks Repo").
+3.  Set the **Repository URL** to: `https://raw.githubusercontent.com/n00bcodr/JellyfinTweaks/main/manifest.json`
+4.  Click **Save**.
+5.  Go to the **Catalog** tab, find **Jellfin Tweaks** in the list, and click **Install**.
+6.  **Restart** your Jellyfin server to complete the installation.
+
+
+---
+
+<div align="center">
+
+**Made with 💜 for Jellyfin and the community**
+
+### Enjoying Jellyfin Tweaks?
+
+Checkout my other repos!
+
+[Jellyfin-Enhanced](https://github.com/n00bcodr/Jellyfin-Enhanced) (javascript) • [Jellyfin-Elsewhere](https://github.com/n00bcodr/Jellyfin-Elsewhere) (javascript) • [Jellyfin-Tweaks](https://github.com/n00bcodr/JellyfinTweaks) (plugin) • [Jellyfin-JavaScript-Injector](https://github.com/n00bcodr/Jellyfin-JavaScript-Injector) (plugin) • [Jellyfish](https://github.com/n00bcodr/Jellyfish/) (theme)
+
+
+</div>
