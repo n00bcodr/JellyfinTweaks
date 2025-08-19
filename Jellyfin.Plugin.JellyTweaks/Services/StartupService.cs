@@ -21,7 +21,7 @@ namespace Jellyfin.Plugin.JellyTweaks.Services
         public string Name => "Jellyfin Tweaks Startup";
         public string Key => "JellyTweaksStartup";
         public string Description => "Injects the Jellyfin Tweaks script using the File Transformation plugin and performs necessary cleanups.";
-        public string Category => "Jellyfin Tweaks";
+        public string Category => "Startup Services";
 
         public StartupService(ILogger<StartupService> logger, IApplicationPaths applicationPaths)
         {
