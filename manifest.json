@@ -9,6 +9,14 @@
         "imageUrl": "https://raw.githubusercontent.com/n00bcodr/JellyfinTweaks/master/Jellyfin.Plugin.JellyTweaks/images/thumb.png",
         "versions": [
             {
+                "checksum": "6ae17ddf411fc562b690d12c97389987",
+                "changelog": "- Use [file-transformation-plugin](https://github.com/IAmParadox27/jellyfin-plugin-file-transformation) to 'inject' javascript without modifying index.html\n - This is to help with all the permission issues for docker installs.\n - Fallback if file-transformation-plugin is not installed to the regulat index.html modification\n - Add an option to reset Jellyfin Enhanced settings to default for all users",
+                "targetAbi": "10.9.4.0",
+                "sourceUrl": "https://github.com/n00bcodr/JellyfinTweaks/releases/download/2.1.0.0/Jellyfin.Plugin.JellyTweaks.zip",
+                "timestamp": "2025-08-19T07:02:58Z",
+                "version": "2.1.0.0"
+            },
+            {
                 "checksum": "29622399261e493ce33e2a24296ef76e",
                 "changelog": "- Complete refactor to use localStorage, no longer modifies core files.\n- Added options for Theme Videos, Rewatching, and Episode Images in Next Up.",
                 "targetAbi": "10.9.4.0",
