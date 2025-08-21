@@ -15,6 +15,7 @@ public class PluginConfiguration : BasePluginConfiguration
         DefaultLibraryPageSize = 100;
         MaxDaysNextUp = 365;
         EnableBackdropsByDefault = false;
+        EnableDetailsBannerByDefault = false;
         ForceEnableThemeMusic = false;
         ForceEnableThemeVideos = false;
         ForceDisableNextVideoInfo = false;
@@ -25,6 +26,7 @@ public class PluginConfiguration : BasePluginConfiguration
     public int DefaultLibraryPageSize { get; set; }
     public int? MaxDaysNextUp { get; set; }
     public bool EnableBackdropsByDefault { get; set; }
+    public bool EnableDetailsBannerByDefault { get; set; }
     public bool ForceEnableThemeMusic { get; set; }
     public bool ForceEnableThemeVideos { get; set; }
     public bool ForceDisableNextVideoInfo { get; set; }

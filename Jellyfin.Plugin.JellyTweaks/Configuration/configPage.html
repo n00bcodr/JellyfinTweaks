@@ -12,13 +12,14 @@
                 <div class="sectionTitleContainer">
                     <h2 class="sectionTitle">Jellyfin Tweaks</h2>
                     <a is="emby-linkbutton" class="raised raised-mini emby-button" style="margin-left: 2em;"
-                        target="_blank" href="https://github.com/n00bcodr/JellyinTweaks">
+                        target="_blank" href="https://github.com/n00bcodr/JellyfinTweaks">
                         <i class="md-icon button-icon button-icon-left secondaryText"></i>
                         <span>Help</span>
                     </a>
                 </div>
             </div>
             <hr>
+            <br/>
 
             <form id="JellyTweaksForm">
                 <!-- Input for DefaultLibraryPageSize -->
@@ -40,6 +41,14 @@
                         <span>Enable Backdrops by default</span>
                     </label>
                      <div class="fieldDescription">Display the backdrops in the background of some pages while browsing the library by default for all users</div>
+                </div>
+                <!-- Checkbox for EnableDetailsBannerByDefault -->
+                <div class="checkboxContainer checkboxContainer-withDescription">
+                    <label class="emby-checkbox-label">
+                        <input id="EnableDetailsBannerByDefault" is="emby-checkbox" name="EnableDetailsBannerByDefault" type="checkbox"/>
+                        <span>Enable Details Banner by default</span>
+                    </label>
+                     <div class="fieldDescription">Display a banner image at the top of the item details page for all users</div>
                 </div>
                 <!-- Checkbox for ForceEnableThemeMusic -->
                 <div class="checkboxContainer checkboxContainer-withDescription">
@@ -81,6 +90,7 @@
                     </label>
                     <div class="fieldDescription">'Next Up' and 'Continue Watching' sections will use episode images as thumbnails instead of the primary thumbnail of the show for all users</div>
                 </div>
+                <br/>
                 <div
                     style="background-color: rgba(255, 255, 255, 0.05); border-left: 4px solid #00a4dc; border-radius: 4px; padding: 1em 1.5em; margin: 1.5em 0; display: flex; align-items: center; gap: 1em;">
                     <i class="material-icons" style="color: #00a4dc; font-size: 24px;">info</i>
@@ -111,6 +121,7 @@
                     document.querySelector('#DefaultLibraryPageSize').value = config.DefaultLibraryPageSize;
                     document.querySelector('#MaxDaysNextUp').value = config.MaxDaysNextUp ?? '';
                     document.querySelector('#EnableBackdropsByDefault').checked = config.EnableBackdropsByDefault;
+                    document.querySelector('#EnableDetailsBannerByDefault').checked = config.EnableDetailsBannerByDefault;
                     document.querySelector('#ForceEnableThemeMusic').checked = config.ForceEnableThemeMusic;
                     document.querySelector('#ForceEnableThemeVideos').checked = config.ForceEnableThemeVideos;
                     document.querySelector('#ForceDisableNextVideoInfo').checked = config.ForceDisableNextVideoInfo;
@@ -129,6 +140,7 @@
                     DefaultLibraryPageSize: parseInt(document.querySelector('#DefaultLibraryPageSize').value, 10) || 0,
                     MaxDaysNextUp: document.querySelector('#MaxDaysNextUp').value === '' ? null : parseInt(document.querySelector('#MaxDaysNextUp').value, 10),
                     EnableBackdropsByDefault: document.querySelector('#EnableBackdropsByDefault').checked,
+                    EnableDetailsBannerByDefault: document.querySelector('#EnableDetailsBannerByDefault').checked,
                     ForceEnableThemeMusic: document.querySelector('#ForceEnableThemeMusic').checked,
                     ForceEnableThemeVideos: document.querySelector('#ForceEnableThemeVideos').checked,
                     ForceDisableNextVideoInfo: document.querySelector('#ForceDisableNextVideoInfo').checked,

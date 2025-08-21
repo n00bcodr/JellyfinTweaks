@@ -21,6 +21,7 @@
                 setStorageItem(userId, 'maxDaysForNextUp', config.MaxDaysNextUp);
             }
             setStorageItem(userId, 'enableBackdrops', config.EnableBackdropsByDefault);
+            setStorageItem(userId, 'detailsBanner', config.EnableDetailsBannerByDefault);
             setStorageItem(userId, 'enableThemeSongs', config.ForceEnableThemeMusic);
             setStorageItem(userId, 'enableThemeVideos', config.ForceEnableThemeVideos);
             setStorageItem(userId, 'enableNextVideoInfoOverlay', !config.ForceDisableNextVideoInfo);
