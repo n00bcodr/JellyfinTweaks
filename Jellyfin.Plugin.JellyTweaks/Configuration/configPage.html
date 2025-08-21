@@ -11,8 +11,14 @@
             <div class="verticalSection">
                 <div class="sectionTitleContainer">
                     <h2 class="sectionTitle">Jellyfin Tweaks</h2>
+                    <a is="emby-linkbutton" class="raised raised-mini emby-button" style="margin-left: 2em;"
+                        target="_blank" href="https://github.com/n00bcodr/JellyinTweaks">
+                        <i class="md-icon button-icon button-icon-left secondaryText"></i>
+                        <span>Help</span>
+                    </a>
                 </div>
             </div>
+            <hr>
 
             <form id="JellyTweaksForm">
                 <!-- Input for DefaultLibraryPageSize -->
@@ -75,19 +81,19 @@
                     </label>
                     <div class="fieldDescription">'Next Up' and 'Continue Watching' sections will use episode images as thumbnails instead of the primary thumbnail of the show for all users</div>
                 </div>
-                <br>
-                <!-- Info Box -->
-                <div class="infoBox">
-                    <p class="infoBoxText">
-                        <strong>ℹ️</strong> Changes require a page refresh to take effect.
-                    </p>
+                <div
+                    style="background-color: rgba(255, 255, 255, 0.05); border-left: 4px solid #00a4dc; border-radius: 4px; padding: 1em 1.5em; margin: 1.5em 0; display: flex; align-items: center; gap: 1em;">
+                    <i class="material-icons" style="color: #00a4dc; font-size: 24px;">info</i>
+                    <div>
+                        All changes require a page refresh to take effect. <br/>
+                        If old settings persist, please force clear browser cache.
+                    </div>
                 </div>
                 <div>
                     <button class="raised button-submit block emby-button" is="emby-button" type="submit">
                         <span>Save</span>
                     </button>
                 </div>
-
             </form>
         </div>
     </div>
