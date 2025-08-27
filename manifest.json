@@ -9,12 +9,12 @@
         "imageUrl": "https://raw.githubusercontent.com/n00bcodr/JellyfinTweaks/master/Jellyfin.Plugin.JellyTweaks/images/thumb.png",
         "versions": [
             {
-                "checksum": "f28dcd68d3af734fc9e88de1267fe5df",
-                "changelog": "- Add an option to enable Details Banner by Default",
+                "checksum": "9d28727ede403514764b915386fb843c",
+                "changelog": "- Add public config endpoint and update JS to use it, was preventing some users to access the plugin configuration",
                 "targetAbi": "10.9.4.0",
-                "sourceUrl": "https://github.com/n00bcodr/JellyfinTweaks/releases/download/2.1.1.0/Jellyfin.Plugin.JellyTweaks.zip",
-                "timestamp": "2025-08-21T17:30:38Z",
-                "version": "2.1.1.0"
+                "sourceUrl": "https://github.com/n00bcodr/JellyfinTweaks/releases/download/2.1.2.0/Jellyfin.Plugin.JellyTweaks.zip",
+                "timestamp": "2025-08-27T16:06:09Z",
+                "version": "2.1.2.0"
             },
             {
                 "checksum": "6ae17ddf411fc562b690d12c97389987",

@@ -4,8 +4,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <AssemblyVersion>2.1.1.0</AssemblyVersion>
-    <FileVersion>2.1.1.0</FileVersion>
+    <AssemblyVersion>2.1.2.0</AssemblyVersion>
+    <FileVersion>2.1.2.0</FileVersion>
     <RootNamespace>Jellyfin.Plugin.JellyTweaks</RootNamespace>
     <AssemblyName>Jellyfin.Plugin.JellyTweaks</AssemblyName>
   </PropertyGroup>
