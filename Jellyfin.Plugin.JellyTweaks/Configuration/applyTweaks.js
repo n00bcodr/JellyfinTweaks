@@ -11,8 +11,12 @@
 
     function runTweaks(userId) {
         console.log(`[JellyTweaks] User ID found: ${userId}. Applying settings...`);
-        ApiClient.getPluginConfiguration(pluginId).then(config => {
-            console.log('[JellyTweaks] Fetched configuration:', config);
+        ApiClient.ajax({
+            type: 'GET',
+            url: ApiClient.getUrl('/JellyTweaks/public-config'),
+            dataType: 'json'
+        }).then(config => {
+            console.log('[JellyTweaks] Fetched public configuration:', config);
 
             if (config.DefaultLibraryPageSize != null) {
                 setStorageItem(userId, 'libraryPageSize', config.DefaultLibraryPageSize);
@@ -30,7 +34,7 @@
 
             console.log('[JellyTweaks] Finished applying tweaks to localStorage.');
         }).catch(error => {
-            console.error('[JellyTweaks] Failed to fetch plugin configuration:', error);
+            console.error('[JellyTweaks] Failed to fetch public plugin configuration:', error);
         });
     }
 

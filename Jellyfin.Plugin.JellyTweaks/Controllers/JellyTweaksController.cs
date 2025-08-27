@@ -23,4 +23,27 @@ public class JellyTweaksController : ControllerBase
         // Return the file with the correct content type
         return new FileStreamResult(stream, "application/javascript");
     }
+
+    [HttpGet("public-config")]
+    public ActionResult GetPublicConfig()
+    {
+        var config = JellyTweaks.Instance?.Configuration;
+        if (config == null)
+        {
+            return StatusCode(503);
+        }
+
+        return new JsonResult(new
+        {
+            config.DefaultLibraryPageSize,
+            config.MaxDaysNextUp,
+            config.EnableBackdropsByDefault,
+            config.EnableDetailsBannerByDefault,
+            config.ForceEnableThemeMusic,
+            config.ForceEnableThemeVideos,
+            config.ForceDisableNextVideoInfo,
+            config.ForceEnableRewatchingInNextUp,
+            config.ForceEnableEpisodeImagesInNextUp
+        });
+    }
 }
