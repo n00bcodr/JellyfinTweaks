@@ -283,3 +283,4 @@ apiclient/generated
 # Omnisharp crash logs
 mono_crash.*.json
 Jellyfin.Plugin.JellyTweaks/build.sh
+build.sh

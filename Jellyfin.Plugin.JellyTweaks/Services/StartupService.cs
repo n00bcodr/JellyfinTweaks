@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Jellyfin.Plugin.JellyTweaks.Helpers;
+using Jellyfin.Plugin.JellyTweaks.JellyfinVersionSpecific;
 using MediaBrowser.Common.Configuration;
 using MediaBrowser.Model.Tasks;
 using Microsoft.Extensions.Logging;
@@ -103,12 +104,6 @@ namespace Jellyfin.Plugin.JellyTweaks.Services
             }
         }
 
-        public IEnumerable<TaskTriggerInfo> GetDefaultTriggers()
-        {
-            yield return new TaskTriggerInfo
-            {
-                Type = TaskTriggerInfo.TriggerStartup
-            };
-        }
+        public IEnumerable<TaskTriggerInfo> GetDefaultTriggers() => StartupServiceHelper.GetDefaultTriggers();
     }
 }
