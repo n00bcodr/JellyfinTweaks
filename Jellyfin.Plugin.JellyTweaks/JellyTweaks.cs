@@ -40,7 +40,7 @@ namespace Jellyfin.Plugin.JellyTweaks
                 }
 
                 var pluginVersion = Version.ToString();
-                var scriptUrl = "JellyTweaks/script";
+                var scriptUrl = "../JellyTweaks/script";
                 var scriptTag = $"<script plugin=\"JellyTweaks\" version=\"{pluginVersion}\" src=\"{scriptUrl}\" defer></script>";
 
                 var content = File.ReadAllText(indexPath);

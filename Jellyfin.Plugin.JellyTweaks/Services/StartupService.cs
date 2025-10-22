@@ -51,7 +51,7 @@ namespace Jellyfin.Plugin.JellyTweaks.Services
                 }
 
                 var content = File.ReadAllText(indexPath);
-                var regex = new Regex($"<script[^>]*src=[\"']/JellyTweaks/script[\"'][^>]*>\\s*</script>\\n?");
+                var regex = new Regex($"<script[^>]*src=[\"'][^\"']*JellyTweaks/script[\"'][^>]*>\\s*</script>\\n?");
 
                 if (regex.IsMatch(content))
                 {
