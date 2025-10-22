@@ -13,7 +13,7 @@ namespace Jellyfin.Plugin.JellyTweaks.Helpers
             }
 
             var pluginVersion = JellyTweaks.Instance?.Version.ToString() ?? "unknown";
-            var scriptUrl = "/JellyTweaks/script";
+            var scriptUrl = "JellyTweaks/script";
             var scriptTag = $"<script plugin=\"JellyTweaks\" version=\"{pluginVersion}\" src=\"{scriptUrl}\" defer></script>";
 
             if (content.Contents.Contains("</body>"))
