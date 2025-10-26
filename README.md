@@ -34,7 +34,18 @@ A simple plugin that adds useful features, this is built on top of [gaam24/Jelly
 
 1.  In Jellyfin, go to **Dashboard** > **Plugins** > **Catalog** > ⚙️
 2.  Click **➕** and give the repository a name (e.g., "Jellfin Tweaks Repo").
-3.  Set the **Repository URL** to: `https://raw.githubusercontent.com/n00bcodr/JellyfinTweaks/main/manifest.json`
+3.  Set the **Repository URL** to:
+
+> [!IMPORTANT]
+> **If you are on Jellyfin version 10.11**
+> ``` 
+> https://raw.githubusercontent.com/n00bcodr/jellyfin-plugins/main/10.11/manifest.json 
+> ```
+> If you are on 10.10.7
+> ``` 
+> https://raw.githubusercontent.com/n00bcodr/jellyfin-plugins/main/10.10/manifest.json 
+> ```
+
 4.  Click **Save**.
 5.  Go to the **Catalog** tab, find **Jellfin Tweaks** in the list, and click **Install**.
 6.  **Restart** your Jellyfin server to complete the installation.
