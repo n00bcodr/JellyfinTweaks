@@ -43,7 +43,10 @@ public class JellyTweaksController : ControllerBase
             config.ForceEnableThemeVideos,
             config.ForceDisableNextVideoInfo,
             config.ForceEnableRewatchingInNextUp,
-            config.ForceEnableEpisodeImagesInNextUp
+            config.ForceEnableEpisodeImagesInNextUp,
+            config.DisplayMode,
+            config.MaxVideoWidth,
+            config.LimitSupportedVideoResolution
         });
     }
 }

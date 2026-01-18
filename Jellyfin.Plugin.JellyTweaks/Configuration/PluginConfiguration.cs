@@ -21,6 +21,9 @@ public class PluginConfiguration : BasePluginConfiguration
         ForceDisableNextVideoInfo = false;
         ForceEnableRewatchingInNextUp = false;
         ForceEnableEpisodeImagesInNextUp = false;
+        DisplayMode = "";
+        MaxVideoWidth = 0;
+        LimitSupportedVideoResolution = false;
     }
 
     public int DefaultLibraryPageSize { get; set; }
@@ -32,4 +35,7 @@ public class PluginConfiguration : BasePluginConfiguration
     public bool ForceDisableNextVideoInfo { get; set; }
     public bool ForceEnableRewatchingInNextUp { get; set; }
     public bool ForceEnableEpisodeImagesInNextUp { get; set; }
+    public string DisplayMode { get; set; }
+    public int MaxVideoWidth { get; set; }
+    public bool LimitSupportedVideoResolution { get; set; }
 }

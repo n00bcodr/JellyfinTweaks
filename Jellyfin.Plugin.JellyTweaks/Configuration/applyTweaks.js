@@ -32,6 +32,14 @@
             setStorageItem(userId, 'enableRewatchingInNextUp', config.ForceEnableRewatchingInNextUp);
             setStorageItem(userId, 'useEpisodeImagesInNextUpAndResume', config.ForceEnableEpisodeImagesInNextUp);
 
+            if (config.DisplayMode !== null && config.DisplayMode !== undefined) {
+                localStorage.setItem('layout', config.DisplayMode);
+            }
+            if (config.MaxVideoWidth != null) {
+                localStorage.setItem('maxVideoWidth', config.MaxVideoWidth);
+            }
+            localStorage.setItem('limitSupportedVideoResolution', config.LimitSupportedVideoResolution);
+
             console.log('[JellyTweaks] Finished applying tweaks to localStorage.');
         }).catch(error => {
             console.error('[JellyTweaks] Failed to fetch public plugin configuration:', error);

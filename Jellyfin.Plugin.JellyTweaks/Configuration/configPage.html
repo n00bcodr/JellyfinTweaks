@@ -90,6 +90,42 @@
                     </label>
                     <div class="fieldDescription">'Next Up' and 'Continue Watching' sections will use episode images as thumbnails instead of the primary thumbnail of the show for all users</div>
                 </div>
+
+                <hr style="margin: 2em 0;"/>
+                <h3>Display and Video Settings</h3>
+
+                <div class="inputContainer">
+                    <label class="inputLabel inputLabelUnfocused" for="DisplayMode">Display Mode</label>
+                    <select id="DisplayMode" is="emby-select" name="DisplayMode">
+                        <option value="">Auto</option>
+                        <option value="experimental">Experimental</option>
+                    </select>
+                    <div class="fieldDescription">Set the display mode for the interface</div>
+                </div>
+
+                <div class="inputContainer">
+                    <label class="inputLabel inputLabelUnfocused" for="MaxVideoWidth">Maximum Allowed Video Transcoding Resolution</label>
+                    <select id="MaxVideoWidth" is="emby-select" name="MaxVideoWidth">
+                        <option value="0">Auto</option>
+                        <option value="-1">Screen Resolution</option>
+                        <option value="640">360p</option>
+                        <option value="852">480p</option>
+                        <option value="1280">720p</option>
+                        <option value="1920">1080p</option>
+                        <option value="3840">4K</option>
+                        <option value="7680">8K</option>
+                    </select>
+                    <div class="fieldDescription">Set the maximum resolution for video transcoding</div>
+                </div>
+
+                <div class="checkboxContainer checkboxContainer-withDescription">
+                    <label class="emby-checkbox-label">
+                        <input id="LimitSupportedVideoResolution" is="emby-checkbox" name="LimitSupportedVideoResolution" type="checkbox"/>
+                        <span>Limit maximum supported video resolution</span>
+                    </label>
+                    <div class="fieldDescription">Use 'Maximum Allowed Video Transcoding Resolution' as maximum supported video resolution</div>
+                </div>
+
                 <br/>
                 <div
                     style="background-color: rgba(255, 255, 255, 0.05); border-left: 4px solid #00a4dc; border-radius: 4px; padding: 1em 1.5em; margin: 1.5em 0; display: flex; align-items: center; gap: 1em;">
@@ -127,6 +163,9 @@
                     document.querySelector('#ForceDisableNextVideoInfo').checked = config.ForceDisableNextVideoInfo;
                     document.querySelector('#ForceEnableRewatchingInNextUp').checked = config.ForceEnableRewatchingInNextUp;
                     document.querySelector('#ForceEnableEpisodeImagesInNextUp').checked = config.ForceEnableEpisodeImagesInNextUp;
+                    document.querySelector('#DisplayMode').value = config.DisplayMode || '';
+                    document.querySelector('#MaxVideoWidth').value = config.MaxVideoWidth || 0;
+                    document.querySelector('#LimitSupportedVideoResolution').checked = config.LimitSupportedVideoResolution;
                     Dashboard.hideLoadingMsg();
                 });
             }
@@ -145,7 +184,10 @@
                     ForceEnableThemeVideos: document.querySelector('#ForceEnableThemeVideos').checked,
                     ForceDisableNextVideoInfo: document.querySelector('#ForceDisableNextVideoInfo').checked,
                     ForceEnableRewatchingInNextUp: document.querySelector('#ForceEnableRewatchingInNextUp').checked,
-                    ForceEnableEpisodeImagesInNextUp: document.querySelector('#ForceEnableEpisodeImagesInNextUp').checked
+                    ForceEnableEpisodeImagesInNextUp: document.querySelector('#ForceEnableEpisodeImagesInNextUp').checked,
+                    DisplayMode: document.querySelector('#DisplayMode').value || '',
+                    MaxVideoWidth: parseInt(document.querySelector('#MaxVideoWidth').value, 10) || 0,
+                    LimitSupportedVideoResolution: document.querySelector('#LimitSupportedVideoResolution').checked
                 };
 
                 // Update the plugin configuration on the server
