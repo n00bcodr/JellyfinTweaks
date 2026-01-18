@@ -10,6 +10,8 @@ Jellyfin Tweaks - Jellyfin Plugin
   <img alt="GitHub Downloads" src="https://img.shields.io/github/downloads/n00bcodr/JellyfinTweaks/latest/Jellyfin.Plugin.JellyfinTweaks_10.11.0.zip?displayAssetName=false&label=10.11%20Downloads%40Latest&labelColor=black&color=AA5CC3&cacheSeconds=60">
   <br>  <br>
   <a href="https://discord.com/channels/1381737066366242896/1442128048873930762"><img alt="Discord" src="https://img.shields.io/badge/Jellyfin%20Enhanced%20-%20Jellyfin%20Community?&logo=discord&logoColor=white&style=for-the-badge&label=Jellyfin%20Community&labelColor=5865F2&color=black"></a>
+  <br>  <br>
+  <img alt="Logo" src="Jellyfin.Plugin.JellyTweaks\images\thumb.png" width="80%"  />
 </p>
 <br>
 
@@ -25,7 +27,7 @@ A simple plugin that adds useful features, this is built on top of [gaam24/Jelly
 * Force Enable / Disable Theme Videos for all users
 * Force Enable / Disable Rewatching in Next Up
 * Force Enable / Disable Episode Images in Next Up
-
+* and more
 
 > [!Note]
 > This plugin edits localStorage instead of editing index.html and main.jellyfin.bundle.js making it much safer and less intrusive!
