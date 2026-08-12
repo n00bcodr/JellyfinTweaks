@@ -9,6 +9,14 @@
     "imageUrl": "https://raw.githubusercontent.com/n00bcodr/JellyfinTweaks/master/Jellyfin.Plugin.JellyTweaks/images/thumb.png",
     "versions": [
       {
+        "changelog": "- Update README with new badges and links\n - Update README.md\n - Update funding.yml\n - Add GNU General Public License v3\n - Jellyfin v12 Support and drop support for Jellyfin 10.10",
+        "targetAbi": "10.11.0.0",
+        "version": "4.0.0.0",
+        "sourceUrl": "https://github.com/n00bcodr/JellyfinTweaks/releases/download/4.0.0.0/Jellyfin.Plugin.JellyTweaks_10.11.0.zip",
+        "checksum": "C5B74F0A4DA9CDA6BD991E78C8580445",
+        "timestamp": "2026-08-12T15:43:13"
+      },
+      {
         "changelog": "- Revise installation instructions for Jellyfin plugins\n - Add display and video settings to plugin configuration",
         "targetAbi": "10.10.7.0",
         "version": "3.1.0.0",
