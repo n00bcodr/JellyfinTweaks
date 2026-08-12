@@ -38,4 +38,13 @@ public class PluginConfiguration : BasePluginConfiguration
     public string DisplayMode { get; set; }
     public int MaxVideoWidth { get; set; }
     public bool LimitSupportedVideoResolution { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the request-time script injection
+    /// middleware (<see cref="Services.ScriptInjectionStartupFilter"/>) is disabled.
+    /// When disabled, the plugin falls back to registering with the File
+    /// Transformation plugin (if installed) or writing directly to index.html.
+    /// Off by default -- the middleware is the primary injection path.
+    /// </summary>
+    public bool DisableScriptInjectionMiddleware { get; set; }
 }

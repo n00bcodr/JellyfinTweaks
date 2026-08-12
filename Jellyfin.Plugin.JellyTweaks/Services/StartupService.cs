@@ -6,7 +6,6 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Jellyfin.Plugin.JellyTweaks.Helpers;
-using Jellyfin.Plugin.JellyTweaks.JellyfinVersionSpecific;
 using MediaBrowser.Common.Configuration;
 using MediaBrowser.Model.Tasks;
 using Microsoft.Extensions.Logging;
@@ -14,6 +13,17 @@ using Newtonsoft.Json.Linq;
 
 namespace Jellyfin.Plugin.JellyTweaks.Services
 {
+    /// <summary>
+    /// Startup cleanup and legacy-fallback injection path.
+    ///
+    /// Script injection is normally handled entirely by
+    /// <see cref="ScriptInjectionStartupFilter"/> at request time, which needs no
+    /// scheduled task at all. This task always cleans up any on-disk script tag
+    /// left by earlier plugin versions (which used to write directly to
+    /// index.html), and only re-registers with File Transformation / falls back to
+    /// writing index.html itself when the middleware is disabled via
+    /// DisableScriptInjectionMiddleware.
+    /// </summary>
     public class StartupService : IScheduledTask
     {
         private readonly ILogger<StartupService> _logger;
@@ -21,7 +31,7 @@ namespace Jellyfin.Plugin.JellyTweaks.Services
 
         public string Name => "Jellyfin Tweaks Startup";
         public string Key => "JellyTweaksStartup";
-        public string Description => "Injects the Jellyfin Tweaks script using the File Transformation plugin and performs necessary cleanups.";
+        public string Description => "Cleans up legacy on-disk script injection and, if the request-time middleware is disabled, falls back to File Transformation / direct index.html injection.";
         public string Category => "Startup Services";
 
         public StartupService(ILogger<StartupService> logger, IApplicationPaths applicationPaths)
@@ -35,7 +45,12 @@ namespace Jellyfin.Plugin.JellyTweaks.Services
             await Task.Run(() =>
             {
                 CleanupOldScript();
-                RegisterFileTransformation();
+
+                var config = JellyTweaks.Instance?.Configuration;
+                if (config != null && config.DisableScriptInjectionMiddleware)
+                {
+                    RegisterFileTransformation();
+                }
             }, cancellationToken);
         }
 
@@ -104,6 +119,20 @@ namespace Jellyfin.Plugin.JellyTweaks.Services
             }
         }
 
-        public IEnumerable<TaskTriggerInfo> GetDefaultTriggers() => StartupServiceHelper.GetDefaultTriggers();
+        public IEnumerable<TaskTriggerInfo> GetDefaultTriggers()
+        {
+            // Trigger at startup
+            yield return new TaskTriggerInfo
+            {
+                Type = TaskTriggerInfoType.StartupTrigger
+            };
+
+            // Trigger every 12 hours
+            yield return new TaskTriggerInfo
+            {
+                Type = TaskTriggerInfoType.DailyTrigger,
+                TimeOfDayTicks = TimeSpan.FromHours(12).Ticks
+            };
+        }
     }
 }

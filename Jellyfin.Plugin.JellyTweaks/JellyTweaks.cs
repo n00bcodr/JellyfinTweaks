@@ -113,7 +113,8 @@ namespace Jellyfin.Plugin.JellyTweaks
                 new PluginPageInfo
                 {
                     Name = this.Name,
-                    EmbeddedResourcePath = "Jellyfin.Plugin.JellyTweaks.Configuration.configPage.html"
+                    EmbeddedResourcePath = "Jellyfin.Plugin.JellyTweaks.Configuration.configPage.html",
+                    MenuIcon = "tune",
                 }
             };
         }
