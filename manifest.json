@@ -2,8 +2,8 @@
   {
     "name": "Jellyfin Tweaks",
     "guid": "dfee3828-01df-49df-85b1-5c2b75e5ea1a",
-    "description": "Adds useful tweaks to Jellyfin. Based on the original JellyTweaks by gam24.",
     "overview": "Tweaks for Jellyfin",
+    "description": "Adds useful tweaks to Jellyfin. Based on the original JellyTweaks by gam24.",
     "owner": "n00bcodr",
     "category": "General",
     "imageUrl": "https://raw.githubusercontent.com/n00bcodr/JellyfinTweaks/master/Jellyfin.Plugin.JellyTweaks/images/thumb.png",
@@ -25,7 +25,15 @@
         "timestamp": "2026-09-11T16:28:50"
       },
       {
-        "changelog": "- Update README with new badges and links\n - Update README.md\n - Update funding.yml\n - Add GNU General Public License v3\n - Jellyfin v12 Support and drop support for Jellyfin 10.10",
+        "changelog": "**Build for Jellyfin 12.**\n\n- Update README with new badges and links\n - Update README.md\n - Update funding.yml\n - Add GNU General Public License v3\n - Jellyfin v12 Support and drop support for Jellyfin 10.10",
+        "targetAbi": "12.0.0.0",
+        "version": "4.0.0.0",
+        "sourceUrl": "https://github.com/n00bcodr/JellyfinTweaks/releases/download/4.0.0.0/Jellyfin.Plugin.JellyTweaks_12.0.0.zip",
+        "checksum": "2DD2A68862FB15775021683517A01AD5",
+        "timestamp": "2026-08-12T15:43:25"
+      },
+      {
+        "changelog": "**Build for Jellyfin 10.11.** On Jellyfin 12 the catalog installs the Jellyfin 12 build of this version automatically.\n\n- Update README with new badges and links\n - Update README.md\n - Update funding.yml\n - Add GNU General Public License v3\n - Jellyfin v12 Support and drop support for Jellyfin 10.10",
         "targetAbi": "10.11.0.0",
         "version": "4.0.0.0",
         "sourceUrl": "https://github.com/n00bcodr/JellyfinTweaks/releases/download/4.0.0.0/Jellyfin.Plugin.JellyTweaks_10.11.0.zip",
@@ -33,7 +41,15 @@
         "timestamp": "2026-08-12T15:43:13"
       },
       {
-        "changelog": "- Revise installation instructions for Jellyfin plugins\n - Add display and video settings to plugin configuration",
+        "changelog": "**Build for Jellyfin 10.11 only. Not for Jellyfin 12.**\n\n- Revise installation instructions for Jellyfin plugins\n - Add display and video settings to plugin configuration\n - v3.1.0.0",
+        "targetAbi": "10.11.0.0",
+        "version": "3.1.0.0",
+        "sourceUrl": "https://github.com/n00bcodr/JellyfinTweaks/releases/download/3.1.0.0/Jellyfin.Plugin.JellyTweaks_10.11.0.zip",
+        "checksum": "0BC862688C9045D7C2793CBDA0AA8446",
+        "timestamp": "2026-01-18T19:36:36"
+      },
+      {
+        "changelog": "**Build for Jellyfin 10.10 only. Not for Jellyfin 12.**\n\n- Revise installation instructions for Jellyfin plugins\n - Add display and video settings to plugin configuration\n - v3.1.0.0",
         "targetAbi": "10.10.7.0",
         "version": "3.1.0.0",
         "sourceUrl": "https://github.com/n00bcodr/JellyfinTweaks/releases/download/3.1.0.0/Jellyfin.Plugin.JellyTweaks_10.10.7.zip",
@@ -41,7 +57,15 @@
         "timestamp": "2026-01-18T19:36:40"
       },
       {
-        "changelog": "- Fix script path for installations with base url\n - Please remove this manifest and add the manifest for 10.11 if you are on 10.11. \n https://raw.githubusercontent.com/n00bcodr/jellyfin-plugins/main/10.11/manifest.json ",
+        "changelog": "**Build for Jellyfin 10.11 only. Not for Jellyfin 12.**\n\n- Fix script path for installations with base url",
+        "targetAbi": "10.11.0.0",
+        "version": "3.0.1.0",
+        "sourceUrl": "https://github.com/n00bcodr/JellyfinTweaks/releases/download/3.0.1.0/Jellyfin.Plugin.JellyTweaks_10.11.0.zip",
+        "checksum": "039697408A4EDECD2159FE983DDEF2F6",
+        "timestamp": "2025-10-22T05:53:24"
+      },
+      {
+        "changelog": "**Build for Jellyfin 10.10 only. Not for Jellyfin 12.**\n\n- Fix script path for installations with base url\n - Please remove this manifest and add the manifest for 10.11 if you are on 10.11. \n https://raw.githubusercontent.com/n00bcodr/jellyfin-plugins/main/10.11/manifest.json",
         "targetAbi": "10.10.7.0",
         "version": "3.0.1.0",
         "sourceUrl": "https://github.com/n00bcodr/JellyfinTweaks/releases/download/3.0.1.0/Jellyfin.Plugin.JellyTweaks_10.10.7.zip",
@@ -49,7 +73,15 @@
         "timestamp": "2025-10-22T05:53:30"
       },
       {
-        "changelog": "- 10.11 Support!\n - Please add the manifest for 10.11 if you are on 10.11. https://raw.githubusercontent.com/n00bcodr/jellyfin-plugins/main/10.11/manifest.json ",
+        "changelog": "**Build for Jellyfin 10.11 only. Not for Jellyfin 12.**\n\n- Support for 10.11",
+        "targetAbi": "10.11.0.0",
+        "version": "3.0.0.0",
+        "sourceUrl": "https://github.com/n00bcodr/JellyfinTweaks/releases/download/3.0.0.0/Jellyfin.Plugin.JellyTweaks_10.11.0.zip",
+        "checksum": "73313429BE665341BDB2539BA69A557D",
+        "timestamp": "2025-10-20T17:25:23"
+      },
+      {
+        "changelog": "**Build for Jellyfin 10.10 only. Not for Jellyfin 12.**\n\n- 10.11 Support!\n - Please add the manifest for 10.11 if you are on 10.11. https://raw.githubusercontent.com/n00bcodr/jellyfin-plugins/main/10.11/manifest.json",
         "targetAbi": "10.10.7.0",
         "version": "3.0.0.0",
         "sourceUrl": "https://github.com/n00bcodr/JellyfinTweaks/releases/download/3.0.0.0/Jellyfin.Plugin.JellyTweaks_10.10.7.zip",
@@ -58,7 +90,7 @@
       },
       {
         "checksum": "9d28727ede403514764b915386fb843c",
-        "changelog": "- Add public config endpoint and update JS to use it, was preventing some users to access the plugin configuration",
+        "changelog": "**Build for Jellyfin 10.9 only. Not for Jellyfin 12.**\n\n- Add public config endpoint and update JS to use it, was preventing some users to access the plugin configuration",
         "targetAbi": "10.9.4.0",
         "sourceUrl": "https://github.com/n00bcodr/JellyfinTweaks/releases/download/2.1.2.0/Jellyfin.Plugin.JellyTweaks.zip",
         "timestamp": "2025-08-27T16:06:09Z",
@@ -66,7 +98,7 @@
       },
       {
         "checksum": "6ae17ddf411fc562b690d12c97389987",
-        "changelog": "- Use [file-transformation-plugin](https://github.com/IAmParadox27/jellyfin-plugin-file-transformation) to 'inject' javascript without modifying index.html\n - This is to help with all the permission issues for docker installs.\n - Fallback if file-transformation-plugin is not installed to the regular index.html modification\n",
+        "changelog": "**Build for Jellyfin 10.9 only. Not for Jellyfin 12.**\n\n- Use [file-transformation-plugin](https://github.com/IAmParadox27/jellyfin-plugin-file-transformation) to 'inject' javascript without modifying index.html\n - This is to help with all the permission issues for docker installs.\n - Fallback if file-transformation-plugin is not installed to the regular index.html modification",
         "targetAbi": "10.9.4.0",
         "sourceUrl": "https://github.com/n00bcodr/JellyfinTweaks/releases/download/2.1.0.0/Jellyfin.Plugin.JellyTweaks.zip",
         "timestamp": "2025-08-19T07:02:58Z",
@@ -74,7 +106,7 @@
       },
       {
         "checksum": "29622399261e493ce33e2a24296ef76e",
-        "changelog": "- Complete refactor to use localStorage, no longer modifies core files.\n- Added options for Theme Videos, Rewatching, and Episode Images in Next Up.",
+        "changelog": "**Build for Jellyfin 10.9 only. Not for Jellyfin 12.**\n\n- Complete refactor to use localStorage, no longer modifies core files.\n- Added options for Theme Videos, Rewatching, and Episode Images in Next Up.",
         "targetAbi": "10.9.4.0",
         "sourceUrl": "https://github.com/n00bcodr/JellyfinTweaks/releases/download/2.0.0.0/JellyFin.Tweaks.Plugin.zip",
         "timestamp": "2025-05-13T16:00:30Z",
@@ -82,7 +114,7 @@
       },
       {
         "checksum": "8230646cb5c0dec3e92824999ea283eb",
-        "changelog": "-Fix logic for Force theme music and backdrops",
+        "changelog": "**Build for Jellyfin 10.9 only. Not for Jellyfin 12.**\n\n-Fix logic for Force theme music and backdrops",
         "targetAbi": "10.9.4.0",
         "sourceUrl": "https://github.com/n00bcodr/JellyfinTweaks/releases/download/1.1.3.1/JellyFin.Tweaks.Plugin.zip",
         "timestamp": "2025-05-13T16:00:30Z",
@@ -90,7 +122,7 @@
       },
       {
         "checksum": "992b5104c0334a19e2f9601540580b9a",
-        "changelog": "-Fix logic for Force theme music and backdrops",
+        "changelog": "**Build for Jellyfin 10.9 only. Not for Jellyfin 12.**\n\n-Fix logic for Force theme music and backdrops",
         "targetAbi": "10.9.4.0",
         "sourceUrl": "https://github.com/n00bcodr/JellyfinTweaks/releases/download/1.1.3.0/JellyFin.Tweaks.Plugin.zip",
         "timestamp": "2025-05-13T15:23:30Z",
@@ -98,7 +130,7 @@
       },
       {
         "checksum": "f7515430b1b7f455c0f40aaec1f34e27",
-        "changelog": "-Fix logic for Force theme music",
+        "changelog": "**Build for Jellyfin 10.9 only. Not for Jellyfin 12.**\n\n-Fix logic for Force theme music",
         "targetAbi": "10.9.4.0",
         "sourceUrl": "https://github.com/n00bcodr/JellyfinTweaks/releases/download/1.1.2/JellyFin.Tweaks.Plugin.zip",
         "timestamp": "2025-04-23T03:48:01Z",
@@ -106,51 +138,11 @@
       },
       {
         "checksum": "7ae1d358517b008fc32b8dccb8dc13ac",
-        "changelog": "- Added Max Days Next Up\n- Added Force Disable Next Video Info\n- Added Force Theme Music\n- Based on gam24's version 1.0.0.4",
+        "changelog": "**Build for Jellyfin 10.9 only. Not for Jellyfin 12.**\n\n- Added Max Days Next Up\n- Added Force Disable Next Video Info\n- Added Force Theme Music\n- Based on gam24's version 1.0.0.4",
         "targetAbi": "10.9.4.0",
         "sourceUrl": "https://github.com/n00bcodr/JellyfinTweaks/releases/download/1.1.1/JellyFin.Tweaks.Plugin.zip",
         "timestamp": "2025-04-22T17:30:21Z",
         "version": "1.1.1"
-      },
-      {
-        "checksum": "025fee84c36e0146ed8c8c59c93e933f",
-        "changelog": "- Fixed bug with apply tweeks",
-        "targetAbi": "10.9.4.0",
-        "sourceUrl": "https://github.com/gaam24/JellyTweaks/releases/download/1.0.0.4/Jellyfin.Plugin.JellyTweaks.zip",
-        "timestamp": "2024-06-07T00:00:00Z",
-        "version": "1.0.0.4"
-      },
-      {
-        "checksum": "5fb9f1715d69a2061d84fde2e2a12c42",
-        "changelog": " - Fixed enableBackdrops by default\n - Update to .NET 8.0\n - Code cleanup",
-        "targetAbi": "10.9.4.0",
-        "sourceUrl": "https://github.com/gaam24/JellyTweaks/releases/download/1.0.0.3/Jellyfin.Plugin.JellyTweaks.zip",
-        "timestamp": "2024-06-03T00:00:00Z",
-        "version": "1.0.0.3"
-      },
-      {
-        "checksum": "41d9555a72b9cf6fe9abdcefa4ba9b5a",
-        "changelog": " - Fix CultureInfo",
-        "targetAbi": "10.8.9.0",
-        "sourceUrl": "https://github.com/gaam24/JellyTweaks/releases/download/1.0.0.2/Jellyfin.Plugin.JellyTweaks.zip",
-        "timestamp": "2023-04-24T00:00:00Z",
-        "version": "1.0.0.2"
-      },
-      {
-        "checksum": "ac7206b63ee2ca9361c765ce15226800",
-        "changelog": " - Rebuilded tweak searching (now using all tweaks for one file saving the file only once)\n - Added descriptions in options\n - Small code cleanup",
-        "targetAbi": "10.8.9.0",
-        "sourceUrl": "https://github.com/gaam24/JellyTweaks/releases/download/1.0.0.1/Jellyfin.Plugin.JellyTweaks.zip",
-        "timestamp": "2023-02-28T00:00:00Z",
-        "version": "1.0.0.1"
-      },
-      {
-        "checksum": "a2ac74f5e84bfdb6a6cd7c8648e5e161",
-        "changelog": "Initial release",
-        "targetAbi": "10.8.9.0",
-        "sourceUrl": "https://github.com/gaam24/JellyTweaks/releases/download/1.0.0.0/Jellyfin.Plugin.JellyTweaks.zip",
-        "timestamp": "2023-02-27T00:00:00Z",
-        "version": "1.0.0.0"
       }
     ]
   }
