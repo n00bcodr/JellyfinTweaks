@@ -17,11 +17,10 @@
     <AssemblyName>Jellyfin.Plugin.JellyTweaks</AssemblyName>
   </PropertyGroup>
 
-  <!-- Jellyfin 12 / .NET 10. The Jellyfin.Controller/Model 12.0.0-rc1 NuGet packages
-       bring the rest transitively. Bump to 12.0.0 once it ships. -->
+  <!-- Jellyfin 12 / .NET 10. The Jellyfin.Controller/Model 12.0.0 NuGet packages bring the rest transitively. -->
   <PropertyGroup Condition="'$(JellyfinTarget)' == 'jf12'">
     <TargetFramework>net10.0</TargetFramework>
-    <JellyfinVersion>12.0.0-rc1</JellyfinVersion>
+    <JellyfinVersion>12.0.0</JellyfinVersion>
   </PropertyGroup>
 
   <!-- Jellyfin 10.11 / .NET 9. Pinned to 10.11.0 (as upstream does) so the artifact
@@ -40,6 +39,8 @@
   <ItemGroup>
     <None Remove="Configuration\configPage.html"/>
     <EmbeddedResource Include="Configuration\configPage.html"/>
+    <None Remove="Configuration\configPage.css"/>
+    <EmbeddedResource Include="Configuration\configPage.css"/>
     <None Remove="Configuration\applyTweaks.js"/>
     <EmbeddedResource Include="Configuration\applyTweaks.js"/>
   </ItemGroup>

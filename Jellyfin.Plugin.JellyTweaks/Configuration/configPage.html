@@ -6,6 +6,12 @@
 </head>
 <body>
 <div class="page type-interior pluginConfigurationPage" data-require="emby-input,emby-checkbox" data-role="page" id="JellyTweaksPage">
+    <script>
+        var jtStyleLink = document.createElement('link');
+        jtStyleLink.rel = 'stylesheet';
+        jtStyleLink.href = ApiClient.getUrl('/JellyTweaks/configPage.css');
+        document.head.appendChild(jtStyleLink);
+    </script>
     <div data-role="content">
         <div class="content-primary">
             <div class="verticalSection">
@@ -19,192 +25,729 @@
                 </div>
             </div>
             <hr>
-            <br/>
+
+            <div class="jtTabs" role="tablist">
+                <button type="button" class="jtTabButton jtTabButtonActive" data-tab="general">General</button>
+                <button type="button" class="jtTabButton" data-tab="display">Display &amp; Video</button>
+                <button type="button" class="jtTabButton" data-tab="audio">Audio &amp; Subtitle</button>
+                <button type="button" class="jtTabButton" data-tab="sorting">Sorting</button>
+            </div>
+
+            <div class="jtInfoBox">
+                <i class="material-icons">info</i>
+                <div>
+                    Setting anything other than "Don't manage" below overwrites what individual users have chosen, and is re-applied every time they reload the page.<br/>
+                    Leave a setting on "Don't manage" if you want users to keep control of it themselves.
+                </div>
+            </div>
 
             <form id="JellyTweaksForm">
-                <!-- Input for DefaultLibraryPageSize -->
-                <div class="inputContainer">
-                    <label class="inputLabel inputLabelUnfocused" for="DefaultLibraryPageSize">Default Library Page Size</label>
-                    <input id="DefaultLibraryPageSize" is="emby-input" min="0" name="DefaultLibraryPageSize" type="number"/>
-                    <div class="fieldDescription">Override the amount of items to show on a library page. Set to 0 in order to disable paging.</div>
-                </div>
-                <!-- Input for MaxDaysNextUp -->
-                <div class="inputContainer">
-                    <label class="inputLabel inputLabelUnfocused" for="MaxDaysNextUp">Max Days in 'Next Up'</label>
-                    <input id="MaxDaysNextUp" is="emby-input" min="0" name="MaxDaysNextUp" type="number" />
-                    <div class="fieldDescription">Default value is 365. Set 0 to disable limit. Leave blank to set it to user selected.</div>
-                </div>
-                <!-- Checkbox for EnableBackdropsByDefault -->
-                <div class="checkboxContainer checkboxContainer-withDescription">
-                    <label class="emby-checkbox-label">
-                        <input id="EnableBackdropsByDefault" is="emby-checkbox" name="EnableBackdropsByDefault" type="checkbox"/>
-                        <span>Enable Backdrops by default</span>
-                    </label>
-                     <div class="fieldDescription">Display the backdrops in the background of some pages while browsing the library by default for all users</div>
-                </div>
-                <!-- Checkbox for EnableDetailsBannerByDefault -->
-                <div class="checkboxContainer checkboxContainer-withDescription">
-                    <label class="emby-checkbox-label">
-                        <input id="EnableDetailsBannerByDefault" is="emby-checkbox" name="EnableDetailsBannerByDefault" type="checkbox"/>
-                        <span>Enable Details Banner by default</span>
-                    </label>
-                     <div class="fieldDescription">Display a banner image at the top of the item details page for all users</div>
-                </div>
-                <!-- Checkbox for ForceEnableThemeMusic -->
-                <div class="checkboxContainer checkboxContainer-withDescription">
-                    <label class="emby-checkbox-label">
-                        <input id="ForceEnableThemeMusic" is="emby-checkbox" name="ForceEnableThemeMusic" type="checkbox"/>
-                        <span>Force enable "Theme Songs" for all users</span>
-                    </label>
-                    <div class="fieldDescription">Override the setting to Play the theme songs in background while browsing the library for all users</div>
-                </div>
-                <!-- Checkbox for ForceEnableThemeVideos -->
-                <div class="checkboxContainer checkboxContainer-withDescription">
-                    <label class="emby-checkbox-label">
-                        <input id="ForceEnableThemeVideos" is="emby-checkbox" name="ForceEnableThemeVideos" type="checkbox"/>
-                        <span>Force enable "Theme Videos" for all users</span>
-                    </label>
-                    <div class="fieldDescription">Override the setting to Play theme videos in the background while browsing the library for all users.</div>
-                </div>
-                <!-- Checkbox for ForceDisableNextVideoInfo -->
-                <div class="checkboxContainer checkboxContainer-withDescription">
-                    <label class="emby-checkbox-label">
-                        <input id="ForceDisableNextVideoInfo" is="emby-checkbox" name="ForceDisableNextVideoInfo" type="checkbox"/>
-                        <span>Force disable "Show next video info during playback" for all users</span>
-                    </label>
-                     <div class="fieldDescription">At the end of a video, display info about the next video coming up in the current playlist.</div>
-                </div>
-                <!-- Checkbox for ForceEnableRewatchingInNextUp -->
-                <div class="checkboxContainer checkboxContainer-withDescription">
-                    <label class="emby-checkbox-label">
-                        <input id="ForceEnableRewatchingInNextUp" is="emby-checkbox" name="ForceEnableRewatchingInNextUp" type="checkbox"/>
-                        <span>Force enable "Rewatching in Next Up"</span>
-                    </label>
-                    <div class="fieldDescription">Override the setting to enable showing already watched episodes in 'Next Up' sections all users.</div>
-                </div>
-                <!-- Checkbox for ForceEnableEpisodeImagesInNextUp -->
-                <div class="checkboxContainer checkboxContainer-withDescription">
-                    <label class="emby-checkbox-label">
-                        <input id="ForceEnableEpisodeImagesInNextUp" is="emby-checkbox" name="ForceEnableEpisodeImagesInNextUp" type="checkbox"/>
-                        <span>Force enable "Use episode images in 'Next Up' and 'Continue Watching' sections"</span>
-                    </label>
-                    <div class="fieldDescription">'Next Up' and 'Continue Watching' sections will use episode images as thumbnails instead of the primary thumbnail of the show for all users</div>
-                </div>
-
-                <hr style="margin: 2em 0;"/>
-                <h3>Display and Video Settings</h3>
-
-                <div class="inputContainer">
-                    <label class="inputLabel inputLabelUnfocused" for="DisplayMode">Display Mode</label>
-                    <select id="DisplayMode" is="emby-select" name="DisplayMode">
-                        <option value="">Auto</option>
-                        <option value="experimental">Experimental</option>
-                    </select>
-                    <div class="fieldDescription">Set the display mode for the interface</div>
-                </div>
-
-                <div class="inputContainer">
-                    <label class="inputLabel inputLabelUnfocused" for="MaxVideoWidth">Maximum Allowed Video Transcoding Resolution</label>
-                    <select id="MaxVideoWidth" is="emby-select" name="MaxVideoWidth">
-                        <option value="0">Auto</option>
-                        <option value="-1">Screen Resolution</option>
-                        <option value="640">360p</option>
-                        <option value="852">480p</option>
-                        <option value="1280">720p</option>
-                        <option value="1920">1080p</option>
-                        <option value="3840">4K</option>
-                        <option value="7680">8K</option>
-                    </select>
-                    <div class="fieldDescription">Set the maximum resolution for video transcoding</div>
+                <!-- ===================== General ===================== -->
+                <div class="jtTabPanel" data-tab-panel="general">
+                    <!-- Input for DefaultLibraryPageSize -->
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="DefaultLibraryPageSize">Default Library Page Size</label>
+                        <input id="DefaultLibraryPageSize" is="emby-input" min="0" name="DefaultLibraryPageSize" type="number"/>
+                        <div class="fieldDescription">Override the amount of items to show on a library page. Set to 0 in order to disable paging.</div>
+                    </div>
+                    <!-- Input for MaxDaysNextUp -->
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="MaxDaysNextUp">Max Days in 'Next Up'</label>
+                        <input id="MaxDaysNextUp" is="emby-input" min="0" name="MaxDaysNextUp" type="number" />
+                        <div class="fieldDescription">Default value is 365. Set 0 to disable limit. Leave blank to set it to user selected.</div>
+                    </div>
+                    <!-- Tri-state select for EnableBackdropsByDefault -->
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="EnableBackdropsByDefault">Backdrops</label>
+                        <select id="EnableBackdropsByDefault" is="emby-select" name="EnableBackdropsByDefault">
+                            <option value="">Don't manage</option>
+                            <option value="true">Force enabled</option>
+                            <option value="false">Force disabled</option>
+                        </select>
+                        <div class="fieldDescription">Display the backdrops in the background of some pages while browsing the library, for all users.</div>
+                    </div>
+                    <!-- Tri-state select for EnableDetailsBannerByDefault -->
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="EnableDetailsBannerByDefault">Details Banner</label>
+                        <select id="EnableDetailsBannerByDefault" is="emby-select" name="EnableDetailsBannerByDefault">
+                            <option value="">Don't manage</option>
+                            <option value="true">Force enabled</option>
+                            <option value="false">Force disabled</option>
+                        </select>
+                        <div class="fieldDescription">Display a banner image at the top of the item details page, for all users.</div>
+                    </div>
+                    <!-- Tri-state select for ForceEnableThemeMusic -->
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="ForceEnableThemeMusic">Theme Songs</label>
+                        <select id="ForceEnableThemeMusic" is="emby-select" name="ForceEnableThemeMusic">
+                            <option value="">Don't manage</option>
+                            <option value="true">Force enabled</option>
+                            <option value="false">Force disabled</option>
+                        </select>
+                        <div class="fieldDescription">Play theme songs in the background while browsing the library, for all users.</div>
+                    </div>
+                    <!-- Tri-state select for ForceEnableThemeVideos -->
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="ForceEnableThemeVideos">Theme Videos</label>
+                        <select id="ForceEnableThemeVideos" is="emby-select" name="ForceEnableThemeVideos">
+                            <option value="">Don't manage</option>
+                            <option value="true">Force enabled</option>
+                            <option value="false">Force disabled</option>
+                        </select>
+                        <div class="fieldDescription">Play theme videos in the background while browsing the library, for all users.</div>
+                    </div>
+                    <!-- Tri-state select for ForceDisableNextVideoInfo -->
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="ForceDisableNextVideoInfo">Next Video Info During Playback</label>
+                        <select id="ForceDisableNextVideoInfo" is="emby-select" name="ForceDisableNextVideoInfo">
+                            <option value="">Don't manage</option>
+                            <option value="true">Force disabled</option>
+                            <option value="false">Force enabled</option>
+                        </select>
+                        <div class="fieldDescription">At the end of a video, display info about the next video coming up in the current playlist, for all users.</div>
+                    </div>
+                    <!-- Tri-state select for ForceEnableRewatchingInNextUp -->
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="ForceEnableRewatchingInNextUp">Rewatching in Next Up</label>
+                        <select id="ForceEnableRewatchingInNextUp" is="emby-select" name="ForceEnableRewatchingInNextUp">
+                            <option value="">Don't manage</option>
+                            <option value="true">Force enabled</option>
+                            <option value="false">Force disabled</option>
+                        </select>
+                        <div class="fieldDescription">Show already-watched episodes in 'Next Up' sections, for all users.</div>
+                    </div>
+                    <!-- Tri-state select for ForceEnableEpisodeImagesInNextUp -->
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="ForceEnableEpisodeImagesInNextUp">Episode Images in Next Up / Continue Watching</label>
+                        <select id="ForceEnableEpisodeImagesInNextUp" is="emby-select" name="ForceEnableEpisodeImagesInNextUp">
+                            <option value="">Don't manage</option>
+                            <option value="true">Force enabled</option>
+                            <option value="false">Force disabled</option>
+                        </select>
+                        <div class="fieldDescription">'Next Up' and 'Continue Watching' sections will use episode images as thumbnails instead of the primary thumbnail of the show, for all users.</div>
+                    </div>
                 </div>
 
-                <div class="checkboxContainer checkboxContainer-withDescription">
-                    <label class="emby-checkbox-label">
-                        <input id="LimitSupportedVideoResolution" is="emby-checkbox" name="LimitSupportedVideoResolution" type="checkbox"/>
-                        <span>Limit maximum supported video resolution</span>
-                    </label>
-                    <div class="fieldDescription">Use 'Maximum Allowed Video Transcoding Resolution' as maximum supported video resolution</div>
+                <!-- ===================== Display & Video ===================== -->
+                <div class="jtTabPanel jtHide" data-tab-panel="display">
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="DisplayMode">Display Mode</label>
+                        <select id="DisplayMode" is="emby-select" name="DisplayMode">
+                            <option value="">Don't manage</option>
+                            <option value="auto">Auto</option>
+                            <option value="desktop">Desktop</option>
+                            <option value="desktop-legacy" data-min-major="12">Desktop (Legacy)</option>
+                            <option value="modern" data-min-major="12">Modern (Jellyfin 12+)</option>
+                            <option value="mobile">Mobile</option>
+                            <option value="mobile-legacy" data-min-major="12">Mobile (Legacy)</option>
+                            <option value="tv">TV</option>
+                            <option value="experimental" data-max-major="11">Experimental (Jellyfin 10.x)</option>
+                        </select>
+                        <div class="fieldDescription">Force the display mode for the interface, for all users.<br/>Options are filtered to match your server's Jellyfin version.</div>
+                    </div>
+
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="MaxVideoWidth">Maximum Allowed Video Transcoding Resolution</label>
+                        <select id="MaxVideoWidth" is="emby-select" name="MaxVideoWidth">
+                            <option value="0">Auto</option>
+                            <option value="-1">Screen Resolution</option>
+                            <option value="640">360p</option>
+                            <option value="852">480p</option>
+                            <option value="1280">720p</option>
+                            <option value="1920">1080p</option>
+                            <option value="3840">4K</option>
+                            <option value="7680">8K</option>
+                        </select>
+                        <div class="fieldDescription">Set the maximum resolution for video transcoding</div>
+                    </div>
+
+                    <div class="checkboxContainer checkboxContainer-withDescription">
+                        <label class="emby-checkbox-label">
+                            <input id="LimitSupportedVideoResolution" is="emby-checkbox" name="LimitSupportedVideoResolution" type="checkbox"/>
+                            <span>Limit maximum supported video resolution</span>
+                        </label>
+                        <div class="fieldDescription">Use 'Maximum Allowed Video Transcoding Resolution' as maximum supported video resolution</div>
+                    </div>
+
+                    <!-- Tri-state select for ForceEnablePgsSubtitleRendering -->
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="ForceEnablePgsSubtitleRendering">Experimental PGS/VobSub Subtitle Rendering</label>
+                        <select id="ForceEnablePgsSubtitleRendering" is="emby-select" name="ForceEnablePgsSubtitleRendering">
+                            <option value="">Don't manage</option>
+                            <option value="true">Force enabled</option>
+                            <option value="false">Force disabled</option>
+                        </select>
+                        <div class="fieldDescription">Render PGS and VobSub subtitles client-side instead of burning them in server-side, avoiding transcoding at the cost of client-side rendering performance.</div>
+                    </div>
+                </div>
+
+                <!-- ===================== Audio & Subtitle ===================== -->
+                <div class="jtTabPanel jtHide" data-tab-panel="audio">
+                    <div class="fieldDescription">These map to each user's own Audio/Subtitle settings in Jellyfin (server-side, not localStorage).</div>
+                    <br/>
+
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="ForceAudioLanguagePreference">Audio Language Preference</label>
+                        <input id="ForceAudioLanguagePreference" is="emby-input" name="ForceAudioLanguagePreference" type="text" placeholder="e.g. eng"/>
+                        <div class="fieldDescription">ISO 639-2 language code to force as the preferred audio language for all users. Leave blank to not manage.</div>
+                    </div>
+
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="ForcePlayDefaultAudioTrack">Play Default Audio Track</label>
+                        <select id="ForcePlayDefaultAudioTrack" is="emby-select" name="ForcePlayDefaultAudioTrack">
+                            <option value="">Don't manage</option>
+                            <option value="true">Force enabled</option>
+                            <option value="false">Force disabled</option>
+                        </select>
+                        <div class="fieldDescription">Always play the default/original audio track instead of the language preference above, for all users.</div>
+                    </div>
+
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="ForceSubtitleLanguagePreference">Subtitle Language Preference</label>
+                        <input id="ForceSubtitleLanguagePreference" is="emby-input" name="ForceSubtitleLanguagePreference" type="text" placeholder="e.g. eng"/>
+                        <div class="fieldDescription">ISO 639-2 language code to force as the preferred subtitle language for all users. Leave blank to not manage.</div>
+                    </div>
+
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="ForceSubtitleMode">Subtitle Playback Mode</label>
+                        <select id="ForceSubtitleMode" is="emby-select" name="ForceSubtitleMode">
+                            <option value="">Don't manage</option>
+                            <option value="Default">Default</option>
+                            <option value="Smart">Smart</option>
+                            <option value="OnlyForced">Only Forced</option>
+                            <option value="Always">Always</option>
+                            <option value="None">None</option>
+                        </select>
+                        <div class="fieldDescription">Force the subtitle playback mode for all users.</div>
+                    </div>
+
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="ForceRememberAudioSelections">Remember Audio Selections</label>
+                        <select id="ForceRememberAudioSelections" is="emby-select" name="ForceRememberAudioSelections">
+                            <option value="">Don't manage</option>
+                            <option value="true">Force enabled</option>
+                            <option value="false">Force disabled</option>
+                        </select>
+                        <div class="fieldDescription">Remember the audio track selected during playback for the next episode/item, for all users.</div>
+                    </div>
+
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="ForceRememberSubtitleSelections">Remember Subtitle Selections</label>
+                        <select id="ForceRememberSubtitleSelections" is="emby-select" name="ForceRememberSubtitleSelections">
+                            <option value="">Don't manage</option>
+                            <option value="true">Force enabled</option>
+                            <option value="false">Force disabled</option>
+                        </select>
+                        <div class="fieldDescription">Remember the subtitle track selected during playback for the next episode/item, for all users.</div>
+                    </div>
+                </div>
+
+                <!-- ===================== Sorting ===================== -->
+                <div class="jtTabPanel jtHide" data-tab-panel="sorting">
+                    <div class="jtInfoBox">
+                        <i class="material-icons">info</i>
+                        <div>
+                            Forces a default sort for Libraries.<br/>
+                            <br/>
+                            If an override is set here, it will be used for all users, and will override any user-selected sort in the library view upon page load.<br/>
+                        </div>
+                    </div>
+                    <div id="sortingLibrariesContainer">
+                        <div class="fieldDescription">Loading libraries&hellip;</div>
+                    </div>
                 </div>
 
                 <br/>
-                <div
-                    style="background-color: rgba(255, 255, 255, 0.05); border-left: 4px solid #00a4dc; border-radius: 4px; padding: 1em 1.5em; margin: 1.5em 0; display: flex; align-items: center; gap: 1em;">
-                    <i class="material-icons" style="color: #00a4dc; font-size: 24px;">info</i>
+                <div class="jtInfoBox">
+                    <i class="material-icons">info</i>
                     <div>
                         All changes require a page refresh to take effect. <br/>
                         If old settings persist, please force clear browser cache.
                     </div>
                 </div>
-                <div>
-                    <button class="raised button-submit block emby-button" is="emby-button" type="submit">
-                        <span>Save</span>
+                <div class="jtSpacer"></div>
+
+                <div id="jtFloatingSave" class="jtFloatingSave">
+                    <button id="jtFloatingSaveButton" class="raised button-submit block emby-button jtFloatingSaveButton" is="emby-button" type="submit">
+                        <span id="jtFloatingSaveLabel">Save</span>
                     </button>
                 </div>
             </form>
         </div>
     </div>
 <script type="text/javascript">
-        (() => {
-            const pluginId = 'dfee3828-01df-49df-85b1-5c2b75e5ea1a';
-            const page = document.querySelector('#JellyTweaksPage');
-            const form = document.querySelector('#JellyTweaksForm');
+        (function () {
+            'use strict';
+
+            var pluginId = 'dfee3828-01df-49df-85b1-5c2b75e5ea1a';
+            var page = document.querySelector('#JellyTweaksPage');
+            var form = document.querySelector('#JellyTweaksForm');
+            var floatingSave = document.querySelector('#jtFloatingSave');
+            var floatingSaveLabel = document.querySelector('#jtFloatingSaveLabel');
+
+            var triStateFields = [
+                'EnableBackdropsByDefault',
+                'EnableDetailsBannerByDefault',
+                'ForceEnableThemeMusic',
+                'ForceEnableThemeVideos',
+                'ForceDisableNextVideoInfo',
+                'ForceEnableRewatchingInNextUp',
+                'ForceEnableEpisodeImagesInNextUp',
+                'ForceEnablePgsSubtitleRendering',
+                'ForcePlayDefaultAudioTrack',
+                'ForceRememberAudioSelections',
+                'ForceRememberSubtitleSelections'
+            ];
+            // '' already means "don't manage" here, so these round-trip as-is.
+            var passthroughFields = [
+                'ForceAudioLanguagePreference',
+                'ForceSubtitleLanguagePreference',
+                'ForceSubtitleMode'
+            ];
+
+            // Sort options per view, mirroring jellyfin-web's own sort menus. Collection
+            // types not listed here have no verified field list, so no sorting UI.
+            var VIEW_DEFS_BY_TYPE = {
+                movies: [
+                    {
+                        suffix: 'movies', label: 'Movies List', sortOptions: [
+                            ['SortName,ProductionYear', 'Name'],
+                            ['Random', 'Random'],
+                            ['CommunityRating,SortName,ProductionYear', 'Community Rating'],
+                            ['CriticRating,SortName,ProductionYear', 'Critic Rating'],
+                            ['DateCreated,SortName,ProductionYear', 'Date Added'],
+                            ['DatePlayed,SortName,ProductionYear', 'Date Played'],
+                            ['OfficialRating,SortName,ProductionYear', 'Parental Rating'],
+                            ['PlayCount,SortName,ProductionYear', 'Play Count'],
+                            ['PremiereDate,SortName,ProductionYear', 'Release Date'],
+                            ['Runtime,SortName,ProductionYear', 'Runtime']
+                        ]
+                    },
+                    {
+                        suffix: 'moviecollections', label: 'Collections', sortOptions: [
+                            ['SortName', 'Name'],
+                            ['CommunityRating,SortName', 'Community Rating'],
+                            ['DateCreated,SortName', 'Date Added'],
+                            ['OfficialRating,SortName', 'Parental Rating'],
+                            ['PremiereDate,SortName', 'Release Date']
+                        ]
+                    }
+                ],
+                tvshows: [
+                    {
+                        suffix: 'series', label: 'TV Shows List', sortOptions: [
+                            ['SortName', 'Name'],
+                            ['Random', 'Random'],
+                            ['CommunityRating,SortName', 'Community Rating'],
+                            ['DateCreated,SortName', 'Date Added'],
+                            ['DateLastContentAdded,SortName', 'Date Episode Added'],
+                            ['SeriesDatePlayed,SortName', 'Date Played'],
+                            ['OfficialRating,SortName', 'Parental Rating'],
+                            ['PremiereDate,SortName', 'Release Date']
+                        ]
+                    }
+                ],
+                music: [
+                    {
+                        suffix: 'musicalbums', label: 'Albums', sortOptions: [
+                            ['SortName', 'Name'],
+                            ['AlbumArtist,SortName', 'Album Artist'],
+                            ['CommunityRating,SortName', 'Community Rating'],
+                            ['CriticRating,SortName', 'Critic Rating'],
+                            ['DateCreated,SortName', 'Date Added'],
+                            ['ProductionYear,PremiereDate,SortName', 'Release Date'],
+                            ['Random,SortName', 'Random']
+                        ]
+                    },
+                    {
+                        suffix: 'songs', label: 'Songs', sortOptions: [
+                            ['Name', 'Name'],
+                            ['Album,AlbumArtist,SortName', 'Album'],
+                            ['AlbumArtist,Album,SortName', 'Album Artist'],
+                            ['Artist,Album,SortName', 'Artist'],
+                            ['DateCreated,SortName', 'Date Added'],
+                            ['DatePlayed,SortName', 'Date Played'],
+                            ['PlayCount,SortName', 'Play Count'],
+                            ['PremiereDate,AlbumArtist,Album,SortName', 'Release Date'],
+                            ['Runtime,AlbumArtist,Album,SortName', 'Runtime'],
+                            ['Random,SortName', 'Random']
+                        ]
+                    }
+                ]
+            };
+
+            // NOTE: avoid ES6 template literals in this file. The dashboard's
+            // config-page pipeline strips dollar-brace interpolation down to its bare
+            // inner text before the script runs. Use string concatenation instead.
+            function escapeHtml(value) {
+                return String(value)
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;');
+            }
+
+            // Converts a nullable bool from the server (true/false/null) into the
+            // matching <select> option value ("true"/"false"/"").
+            function triStateToSelectValue(value) {
+                if (value === true) return 'true';
+                if (value === false) return 'false';
+                return '';
+            }
+
+            // Converts a <select> option value ("true"/"false"/"") back into a
+            // nullable bool ('' means "don't manage" -> null).
+            function selectValueToTriState(value) {
+                if (value === 'true') return true;
+                if (value === 'false') return false;
+                return null;
+            }
+
+            // Null-safe field access: a field can occasionally not exist yet when this
+            // script runs, and a raw querySelector(...).value = x throws in that case.
+            function getFieldEl(id) {
+                var el = document.querySelector('#' + id);
+                if (!el) {
+                    console.warn('[JellyTweaks] Config page: #' + id + ' was not found in the DOM.');
+                }
+                return el;
+            }
+
+            function setFieldValue(id, value) {
+                var el = getFieldEl(id);
+                if (!el) {
+                    return;
+                }
+                if (el.type === 'checkbox') {
+                    el.checked = !!value;
+                } else {
+                    el.value = value;
+                }
+            }
+
+            function getFieldValue(id, fallback) {
+                var el = getFieldEl(id);
+                if (!el) {
+                    return fallback;
+                }
+                return el.type === 'checkbox' ? el.checked : el.value;
+            }
+
+            // Polls until the form's fields actually exist in the DOM.
+            function waitForFormReady(maxWaitMs) {
+                return new Promise(function (resolve) {
+                    var start = Date.now();
+                    (function check() {
+                        if (document.querySelector('#DefaultLibraryPageSize') && document.querySelector('#ForceRememberSubtitleSelections')) {
+                            resolve(true);
+                            return;
+                        }
+                        if (Date.now() - start > maxWaitMs) {
+                            console.warn('[JellyTweaks] Config page: form fields never fully appeared in the DOM; proceeding anyway.');
+                            resolve(false);
+                            return;
+                        }
+                        setTimeout(check, 50);
+                    })();
+                });
+            }
+
+            // Always settles (with fallback) after ms, even if the wrapped promise never does.
+            function withTimeout(promise, ms, fallback) {
+                return new Promise(function (resolve) {
+                    var settled = false;
+                    var timer = setTimeout(function () {
+                        if (!settled) {
+                            settled = true;
+                            resolve(fallback);
+                        }
+                    }, ms);
+                    Promise.resolve(promise).then(
+                        function (value) {
+                            if (!settled) {
+                                settled = true;
+                                clearTimeout(timer);
+                                resolve(value);
+                            }
+                        },
+                        function (error) {
+                            console.error('[JellyTweaks] Config page request failed:', error);
+                            if (!settled) {
+                                settled = true;
+                                clearTimeout(timer);
+                                resolve(fallback);
+                            }
+                        }
+                    );
+                });
+            }
+
+            // ---- Tabs ----
+            function initTabs() {
+                var buttons = Array.from(document.querySelectorAll('.jtTabButton'));
+                var panels = Array.from(document.querySelectorAll('.jtTabPanel'));
+
+                buttons.forEach(function (button) {
+                    button.addEventListener('click', function () {
+                        var target = button.dataset.tab;
+                        buttons.forEach(function (b) {
+                            b.classList.toggle('jtTabButtonActive', b === button);
+                        });
+                        panels.forEach(function (panel) {
+                            panel.classList.toggle('jtHide', panel.dataset.tabPanel !== target);
+                        });
+                    });
+                });
+            }
+
+            // ---- Version-gated Display Mode options ----
+            // Filters the dropdown to the server's major version. A previously-saved
+            // value stays selectable even if out of range, so saving never discards it.
+            function applyDisplayModeVersionGating(serverMajorVersion, currentValue) {
+                var select = document.querySelector('#DisplayMode');
+                Array.from(select.options).forEach(function (option) {
+                    if (option.value === '' || option.value === currentValue) {
+                        option.hidden = false;
+                        return;
+                    }
+                    var minMajor = option.dataset.minMajor ? parseInt(option.dataset.minMajor, 10) : null;
+                    var maxMajor = option.dataset.maxMajor ? parseInt(option.dataset.maxMajor, 10) : null;
+                    var outOfRange = (minMajor != null && serverMajorVersion != null && serverMajorVersion < minMajor) ||
+                        (maxMajor != null && serverMajorVersion != null && serverMajorVersion > maxMajor);
+                    option.hidden = outOfRange;
+                });
+            }
+
+            function getServerMajorVersion() {
+                var cached = typeof ApiClient.serverVersion === 'function' ? ApiClient.serverVersion() : null;
+                if (cached) {
+                    return Promise.resolve(parseInt(cached.split('.')[0], 10));
+                }
+                return ApiClient.getSystemInfo().then(function (info) {
+                    return parseInt((info.Version || '0').split('.')[0], 10);
+                });
+            }
+
+            function fetchLibraries() {
+                return ApiClient.ajax({
+                    type: 'GET',
+                    url: ApiClient.getUrl('/JellyTweaks/libraries'),
+                    dataType: 'json'
+                });
+            }
+
+            // ---- Sorting tab: built dynamically from the server's real library list ----
+            function renderSortingTab(libraries, overrides) {
+                var container = document.querySelector('#sortingLibrariesContainer');
+                var supported = (libraries || []).filter(function (library) {
+                    return !!VIEW_DEFS_BY_TYPE[library.CollectionType];
+                });
+
+                if (supported.length === 0) {
+                    container.innerHTML = '<div class="fieldDescription">No Movies, TV Shows, or Music libraries were found on this server (or none are supported for forced sorting yet).</div>';
+                    return;
+                }
+
+                function selectHtml(library, view, field, options, existingValue) {
+                    var optionsHtml = options.map(function (pair) {
+                        var value = pair[0];
+                        var label = pair[1];
+                        return '<option value="' + escapeHtml(value) + '"' + (value === existingValue ? ' selected' : '') + '>' + escapeHtml(label) + '</option>';
+                    }).join('');
+                    var fieldLabel = field === 'SortBy' ? 'Sort By' : 'Sort Order';
+
+                    return '<div class="inputContainer">' +
+                        '<label class="inputLabel inputLabelUnfocused">' + escapeHtml(view.label) + ': ' + fieldLabel + '</label>' +
+                        '<select is="emby-select" data-library-id="' + escapeHtml(library.Id) + '" data-view-suffix="' + escapeHtml(view.suffix) + '" data-field="' + field + '">' +
+                        '<option value=""' + (existingValue ? '' : ' selected') + '>Don&#39;t manage</option>' +
+                        optionsHtml +
+                        '</select>' +
+                        '</div>';
+                }
+
+                var html = supported.map(function (library) {
+                    var views = VIEW_DEFS_BY_TYPE[library.CollectionType];
+                    var viewsHtml = views.map(function (view) {
+                        var matches = (overrides || []).filter(function (o) {
+                            return o.LibraryId === library.Id && o.ViewSuffix === view.suffix;
+                        });
+                        var existing = matches[0] || {};
+                        var byHtml = selectHtml(library, view, 'SortBy', view.sortOptions, existing.SortBy || '');
+                        var orderHtml = selectHtml(library, view, 'SortOrder', [['Ascending', 'Ascending'], ['Descending', 'Descending']], existing.SortOrder || '');
+                        return byHtml + orderHtml;
+                    }).join('');
+
+                    return '<div class="jtLibraryCard">' +
+                        '<h3 class="jtSubHeading">' + escapeHtml(library.Name) + ' (' + escapeHtml(library.CollectionType) + ')</h3>' +
+                        viewsHtml +
+                        '</div>';
+                }).join('');
+
+                container.innerHTML = html;
+            }
+
+            function collectLibrarySortOverrides() {
+                var bySelects = Array.from(document.querySelectorAll('#sortingLibrariesContainer select[data-field="SortBy"]'));
+                return bySelects.map(function (bySelect) {
+                    var libraryId = bySelect.dataset.libraryId;
+                    var viewSuffix = bySelect.dataset.viewSuffix;
+                    var selector = '#sortingLibrariesContainer select[data-field="SortOrder"][data-library-id="' + libraryId + '"][data-view-suffix="' + viewSuffix + '"]';
+                    var orderSelect = document.querySelector(selector);
+                    return {
+                        LibraryId: libraryId,
+                        ViewSuffix: viewSuffix,
+                        SortBy: bySelect.value || '',
+                        SortOrder: orderSelect ? (orderSelect.value || '') : ''
+                    };
+                }).filter(function (override) {
+                    return override.SortBy || override.SortOrder;
+                });
+            }
+
+            // ---- Dirty-state tracking for the floating Save button ----
+            var cleanSnapshot = null;
+
+            function getFormSnapshot() {
+                var data = {};
+                Array.from(form.elements).forEach(function (el) {
+                    var key = null;
+                    if (el.id) {
+                        key = el.id;
+                    } else if (el.dataset && el.dataset.libraryId) {
+                        key = el.dataset.libraryId + '|' + el.dataset.viewSuffix + '|' + el.dataset.field;
+                    }
+                    if (!key) {
+                        return;
+                    }
+                    data[key] = el.type === 'checkbox' ? el.checked : el.value;
+                });
+                return JSON.stringify(data);
+            }
+
+            function updateDirtyState() {
+                var isDirty = cleanSnapshot !== null && getFormSnapshot() !== cleanSnapshot;
+                floatingSave.classList.toggle('jtDirty', isDirty);
+                floatingSaveLabel.textContent = isDirty ? 'Save*' : 'Save';
+            }
+
+            function markClean() {
+                cleanSnapshot = getFormSnapshot();
+                updateDirtyState();
+            }
 
             // Function to load the configuration from the server
             function loadConfig() {
                 Dashboard.showLoadingMsg();
-                ApiClient.getPluginConfiguration(pluginId).then((config) => {
-                    // Populate form fields with the loaded configuration
-                    document.querySelector('#DefaultLibraryPageSize').value = config.DefaultLibraryPageSize;
-                    document.querySelector('#MaxDaysNextUp').value = config.MaxDaysNextUp ?? '';
-                    document.querySelector('#EnableBackdropsByDefault').checked = config.EnableBackdropsByDefault;
-                    document.querySelector('#EnableDetailsBannerByDefault').checked = config.EnableDetailsBannerByDefault;
-                    document.querySelector('#ForceEnableThemeMusic').checked = config.ForceEnableThemeMusic;
-                    document.querySelector('#ForceEnableThemeVideos').checked = config.ForceEnableThemeVideos;
-                    document.querySelector('#ForceDisableNextVideoInfo').checked = config.ForceDisableNextVideoInfo;
-                    document.querySelector('#ForceEnableRewatchingInNextUp').checked = config.ForceEnableRewatchingInNextUp;
-                    document.querySelector('#ForceEnableEpisodeImagesInNextUp').checked = config.ForceEnableEpisodeImagesInNextUp;
-                    document.querySelector('#DisplayMode').value = config.DisplayMode || '';
-                    document.querySelector('#MaxVideoWidth').value = config.MaxVideoWidth || 0;
-                    document.querySelector('#LimitSupportedVideoResolution').checked = config.LimitSupportedVideoResolution;
-                    Dashboard.hideLoadingMsg();
-                });
+
+                Promise.all([
+                    waitForFormReady(5000),
+                    Promise.resolve(ApiClient.getPluginConfiguration(pluginId))
+                ])
+                    .then(function (results) {
+                        var config = results[1];
+                        try {
+                            setFieldValue('DefaultLibraryPageSize', config.DefaultLibraryPageSize);
+                            setFieldValue('MaxDaysNextUp', config.MaxDaysNextUp === null || config.MaxDaysNextUp === undefined ? '' : config.MaxDaysNextUp);
+                            triStateFields.forEach(function (field) {
+                                setFieldValue(field, triStateToSelectValue(config[field]));
+                            });
+                            passthroughFields.forEach(function (field) {
+                                setFieldValue(field, config[field] || '');
+                            });
+                            setFieldValue('DisplayMode', config.DisplayMode || '');
+                            setFieldValue('MaxVideoWidth', config.MaxVideoWidth || 0);
+                            setFieldValue('LimitSupportedVideoResolution', config.LimitSupportedVideoResolution);
+                        } catch (error) {
+                            console.error('[JellyTweaks] Failed to populate config page fields:', error);
+                        }
+
+                        Dashboard.hideLoadingMsg();
+
+                        withTimeout(getServerMajorVersion(), 8000, null).then(function (serverMajorVersion) {
+                            try {
+                                var displayModeSelect = getFieldEl('DisplayMode');
+                                if (displayModeSelect) {
+                                    applyDisplayModeVersionGating(serverMajorVersion, config.DisplayMode || '');
+                                }
+                            } catch (error) {
+                                console.error('[JellyTweaks] Failed to apply Display Mode version gating:', error);
+                            }
+                            markClean();
+                        });
+
+                        withTimeout(fetchLibraries(), 8000, null).then(function (libraries) {
+                            var sortingContainer = document.querySelector('#sortingLibrariesContainer');
+                            try {
+                                if (libraries === null) {
+                                    if (sortingContainer) {
+                                        sortingContainer.innerHTML =
+                                            '<div class="fieldDescription">Could not load your libraries (request failed or timed out). Check the browser console, or reopen this page to retry.</div>';
+                                    }
+                                } else {
+                                    renderSortingTab(libraries, config.LibrarySortOverrides || []);
+                                }
+                            } catch (error) {
+                                console.error('[JellyTweaks] Failed to render the Sorting tab:', error);
+                                if (sortingContainer) {
+                                    sortingContainer.innerHTML =
+                                        '<div class="fieldDescription">Something went wrong rendering the Sorting tab. Check the browser console.</div>';
+                                }
+                            }
+                            markClean();
+                        });
+                    })
+                    .catch(function (error) {
+                        console.error('[JellyTweaks] Failed to load plugin configuration:', error);
+                        Dashboard.hideLoadingMsg();
+                    });
             }
 
             // Function to save the configuration
             function saveConfig(e) {
                 e.preventDefault();
                 Dashboard.showLoadingMsg();
-                // Build the configuration object from the form fields
-                const config = {
-                    DefaultLibraryPageSize: parseInt(document.querySelector('#DefaultLibraryPageSize').value, 10) || 0,
-                    MaxDaysNextUp: document.querySelector('#MaxDaysNextUp').value === '' ? null : parseInt(document.querySelector('#MaxDaysNextUp').value, 10),
-                    EnableBackdropsByDefault: document.querySelector('#EnableBackdropsByDefault').checked,
-                    EnableDetailsBannerByDefault: document.querySelector('#EnableDetailsBannerByDefault').checked,
-                    ForceEnableThemeMusic: document.querySelector('#ForceEnableThemeMusic').checked,
-                    ForceEnableThemeVideos: document.querySelector('#ForceEnableThemeVideos').checked,
-                    ForceDisableNextVideoInfo: document.querySelector('#ForceDisableNextVideoInfo').checked,
-                    ForceEnableRewatchingInNextUp: document.querySelector('#ForceEnableRewatchingInNextUp').checked,
-                    ForceEnableEpisodeImagesInNextUp: document.querySelector('#ForceEnableEpisodeImagesInNextUp').checked,
-                    DisplayMode: document.querySelector('#DisplayMode').value || '',
-                    MaxVideoWidth: parseInt(document.querySelector('#MaxVideoWidth').value, 10) || 0,
-                    LimitSupportedVideoResolution: document.querySelector('#LimitSupportedVideoResolution').checked
-                };
 
-                // Update the plugin configuration on the server
-                ApiClient.updatePluginConfiguration(pluginId, config)
-                    .then((result) => {
-                        Dashboard.processPluginConfigurationUpdateResult(result);
-                    })
-                    .catch(() => {
-                        Dashboard.hideLoadingMsg(); // Ensure loading message is hidden on error
+                try {
+                    // Build the configuration object from the form fields
+                    var config = {
+                        DefaultLibraryPageSize: parseInt(getFieldValue('DefaultLibraryPageSize', 0), 10) || 0,
+                        MaxDaysNextUp: getFieldValue('MaxDaysNextUp', '') === '' ? null : parseInt(getFieldValue('MaxDaysNextUp', 0), 10),
+                        DisplayMode: getFieldValue('DisplayMode', '') || '',
+                        MaxVideoWidth: parseInt(getFieldValue('MaxVideoWidth', 0), 10) || 0,
+                        LimitSupportedVideoResolution: !!getFieldValue('LimitSupportedVideoResolution', false)
+                    };
+                    triStateFields.forEach(function (field) {
+                        config[field] = selectValueToTriState(getFieldValue(field, ''));
                     });
+                    passthroughFields.forEach(function (field) {
+                        config[field] = getFieldValue(field, '') || '';
+                    });
+                    config.LibrarySortOverrides = collectLibrarySortOverrides();
+
+                    // Update the plugin configuration on the server
+                    ApiClient.updatePluginConfiguration(pluginId, config)
+                        .then(function (result) {
+                            Dashboard.processPluginConfigurationUpdateResult(result);
+                            markClean();
+                        })
+                        .catch(function (error) {
+                            console.error('[JellyTweaks] Failed to save plugin configuration:', error);
+                            Dashboard.hideLoadingMsg(); // Ensure loading message is hidden on error
+                        });
+                } catch (error) {
+                    console.error('[JellyTweaks] Failed to build config for saving:', error);
+                    Dashboard.hideLoadingMsg();
+                }
 
                 return false;
             }
 
             // Attach event listeners
+            initTabs();
             page.addEventListener('pageshow', loadConfig);
             form.addEventListener('submit', saveConfig);
+            form.addEventListener('input', updateDirtyState);
+            form.addEventListener('change', updateDirtyState);
 
         })();
     </script>

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MediaBrowser.Model.Plugins;
 
 namespace Jellyfin.Plugin.JellyTweaks.Configuration;
@@ -14,30 +15,46 @@ public class PluginConfiguration : BasePluginConfiguration
     {
         DefaultLibraryPageSize = 100;
         MaxDaysNextUp = 365;
-        EnableBackdropsByDefault = false;
-        EnableDetailsBannerByDefault = false;
-        ForceEnableThemeMusic = false;
-        ForceEnableThemeVideos = false;
-        ForceDisableNextVideoInfo = false;
-        ForceEnableRewatchingInNextUp = false;
-        ForceEnableEpisodeImagesInNextUp = false;
+        EnableBackdropsByDefault = null;
+        EnableDetailsBannerByDefault = null;
+        ForceEnableThemeMusic = null;
+        ForceEnableThemeVideos = null;
+        ForceDisableNextVideoInfo = null;
+        ForceEnableRewatchingInNextUp = null;
+        ForceEnableEpisodeImagesInNextUp = null;
         DisplayMode = "";
         MaxVideoWidth = 0;
         LimitSupportedVideoResolution = false;
+        ForceEnablePgsSubtitleRendering = null;
+        ForceAudioLanguagePreference = null;
+        ForcePlayDefaultAudioTrack = null;
+        ForceSubtitleLanguagePreference = null;
+        ForceSubtitleMode = null;
+        ForceRememberAudioSelections = null;
+        ForceRememberSubtitleSelections = null;
+        LibrarySortOverrides = new List<LibrarySortOverride>();
     }
 
     public int DefaultLibraryPageSize { get; set; }
     public int? MaxDaysNextUp { get; set; }
-    public bool EnableBackdropsByDefault { get; set; }
-    public bool EnableDetailsBannerByDefault { get; set; }
-    public bool ForceEnableThemeMusic { get; set; }
-    public bool ForceEnableThemeVideos { get; set; }
-    public bool ForceDisableNextVideoInfo { get; set; }
-    public bool ForceEnableRewatchingInNextUp { get; set; }
-    public bool ForceEnableEpisodeImagesInNextUp { get; set; }
+    public bool? EnableBackdropsByDefault { get; set; }
+    public bool? EnableDetailsBannerByDefault { get; set; }
+    public bool? ForceEnableThemeMusic { get; set; }
+    public bool? ForceEnableThemeVideos { get; set; }
+    public bool? ForceDisableNextVideoInfo { get; set; }
+    public bool? ForceEnableRewatchingInNextUp { get; set; }
+    public bool? ForceEnableEpisodeImagesInNextUp { get; set; }
     public string DisplayMode { get; set; }
     public int MaxVideoWidth { get; set; }
     public bool LimitSupportedVideoResolution { get; set; }
+    public bool? ForceEnablePgsSubtitleRendering { get; set; }
+    public string? ForceAudioLanguagePreference { get; set; }
+    public bool? ForcePlayDefaultAudioTrack { get; set; }
+    public string? ForceSubtitleLanguagePreference { get; set; }
+    public string? ForceSubtitleMode { get; set; }
+    public bool? ForceRememberAudioSelections { get; set; }
+    public bool? ForceRememberSubtitleSelections { get; set; }
+    public List<LibrarySortOverride> LibrarySortOverrides { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether the request-time script injection
