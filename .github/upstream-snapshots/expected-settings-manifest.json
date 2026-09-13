@@ -71,5 +71,9 @@
     { "name": "MyMediaExcludes", "key": "MyMediaExcludes", "storage": "USERCONFIG" },
     { "name": "OrderedViews", "key": "OrderedViews", "storage": "USERCONFIG" },
     { "name": "GroupedFolders", "key": "GroupedFolders", "storage": "USERCONFIG" }
-  ]
+  ],
+  "ignoredUnmanifestedKeys": {
+    "_comment": "userSettings.js keys deliberately not tracked as a tweak (out of scope / not worth managing) -- suppressed from the 'possible new tweak candidate' informational notes so they don't repeat on every run. Add a key here only after a deliberate decision not to support it; don't use this to silence a key you just haven't gotten to yet.",
+    "keys": ["comicsPlayerSettings", "skin", "soundeffects"]
+  }
 }

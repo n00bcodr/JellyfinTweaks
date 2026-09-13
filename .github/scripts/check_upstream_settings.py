@@ -160,16 +160,19 @@ def main() -> int:
             if key not in userconfig_properties:
                 failures.append(f"[{name}] UserConfiguration property '{key}' no longer found in UserConfiguration.cs")
         else:
-            failures.append(f"[{name}] unknown expected storage bucket '{expected_bucket}' in manifest -- fix the manifest")
+            failures.append(f"[{name}] unknown expected storage bucket '{expected_bucket}' in manifest. Fix the manifest.")
 
     for description, (source, needle) in KNOWN_DYNAMIC_PATTERNS.items():
         if needle not in raw_sources[source]:
-            failures.append(f"[dynamic pattern] {description}: exact snippet no longer found in {source} -- review manually")
+            failures.append(f"[dynamic pattern] {description}: exact snippet no longer found in {source}. Review manually.")
 
     # Informational only: settings that exist upstream but aren't in our manifest yet.
+    # Keys we've deliberately decided not to track (see ignoredUnmanifestedKeys in the
+    # manifest) are excluded so they don't re-flag on every run.
     known_keys = {e["key"] for e in manifest["settings"]}
-    for key in sorted(set(user_settings_buckets) - known_keys):
-        informational.append(f"userSettings.js has an unmanifested key '{key}' (bucket {user_settings_buckets[key]}) -- possible new tweak candidate")
+    ignored_keys = set(manifest.get("ignoredUnmanifestedKeys", {}).get("keys", []))
+    for key in sorted(set(user_settings_buckets) - known_keys - ignored_keys):
+        informational.append(f"userSettings.js has an unmanifested key '{key}' (bucket {user_settings_buckets[key]}). Possible new tweak candidate.")
 
     print("\n--- Drift check results ---")
     if failures:
