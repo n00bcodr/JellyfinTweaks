@@ -18,7 +18,7 @@ namespace Jellyfin.Plugin.JellyTweaks.Services
     /// This replaces the plugin's former dependency on the community File
     /// Transformation plugin: it uses only standard ASP.NET Core hosting APIs, so
     /// it works unmodified on both Jellyfin 10.11 and Jellyfin 12, and never
-    /// writes to the web folder on disk -- avoiding the permission issues that
+    /// writes to the web folder on disk, avoiding the permission issues that
     /// plagued the old on-disk index.html rewrite on Docker installs.
     ///
     /// The filter is deliberately defensive and additive:
@@ -48,7 +48,7 @@ namespace Jellyfin.Plugin.JellyTweaks.Services
             return app =>
             {
                 // Registered before the rest of the pipeline (next(app)) so this runs
-                // outermost -- stripping Accept-Encoding below then reliably yields an
+                // outermost: stripping Accept-Encoding below then reliably yields an
                 // uncompressed response we can read and rewrite.
                 app.Use(InvokeAsync);
                 next(app);
@@ -73,7 +73,7 @@ namespace Jellyfin.Plugin.JellyTweaks.Services
             }
 
             var config = JellyTweaks.Instance?.Configuration;
-            if (config == null || config.DisableScriptInjectionMiddleware)
+            if (config == null || config.DisableAllTweaks || config.DisableScriptInjectionMiddleware)
             {
                 await nextMw().ConfigureAwait(false);
                 return;
@@ -113,7 +113,7 @@ namespace Jellyfin.Plugin.JellyTweaks.Services
 
             if (!isHtml)
             {
-                // 304, redirects, non-HTML -- pass straight through unchanged.
+                // 304, redirects, non-HTML: pass straight through unchanged.
                 await buffer.CopyToAsync(originalBody).ConfigureAwait(false);
                 return;
             }
@@ -143,7 +143,7 @@ namespace Jellyfin.Plugin.JellyTweaks.Services
             }
             catch (Exception ex)
             {
-                // Never break index.html -- serve whatever we have.
+                // Never break index.html: serve whatever we have.
                 _logger.LogWarning(ex, "Script injection middleware error (serving original HTML).");
             }
 

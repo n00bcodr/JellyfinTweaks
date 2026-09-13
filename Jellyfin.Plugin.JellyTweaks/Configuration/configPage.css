@@ -20,7 +20,7 @@
     color: #fff;
 }
 
-.jtTabPanel.jtHide {
+.jtHide {
     display: none;
 }
 
@@ -81,4 +81,231 @@
 .jtInfoBox i {
     color: #00a4dc;
     font-size: 24px;
+}
+
+.jtLibraryChecklist {
+    margin: 0.5em 0 1.5em;
+}
+
+.jtChecklistRow {
+    display: flex;
+    align-items: center;
+    padding: 0.3em 0;
+}
+
+.jtLibraryDisplayRow {
+    padding: 0.6em 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.jtLibraryDisplayName {
+    font-weight: 600;
+    margin-bottom: 0.2em;
+}
+
+.jtChecklistRowOrderable {
+    display: flex;
+    align-items: center;
+    gap: 0.75em;
+    padding: 0.3em 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.jtOrderButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.jtOrderButtons button {
+    background: rgba(255, 255, 255, 0.08);
+    color: inherit;
+    border: none;
+    border-radius: 3px;
+    width: 1.8em;
+    height: 1.3em;
+    line-height: 1;
+    font-size: 0.7em;
+    cursor: pointer;
+    padding: 0;
+}
+
+.jtOrderButtons button:hover {
+    background: #00a4dc;
+}
+
+.jtBitrateGrid {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+}
+
+.jtBitrateGrid th,
+.jtBitrateGrid td {
+    text-align: left;
+    padding: 0.5em 1em 0.5em 0;
+    vertical-align: middle;
+}
+
+.jtSubtitlePreview {
+    margin: 1em 0 1.5em;
+    padding: 1.6em;
+    border-radius: 4px;
+    background: linear-gradient(140deg, #aa5cc3, #00a4dc);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.jtSubtitlePreviewWindow {
+    width: 90%;
+    padding: 0.25em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.jtSubtitlePreviewText {
+    text-align: center;
+    padding: 0.2em 0.6em;
+}
+
+#jtSubtitleAppearanceSection.jtDisabled {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.jtScopeBadge {
+    display: inline-block;
+    font-size: 0.72em;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    padding: 0.15em 0.6em;
+    border-radius: 999px;
+    margin-left: 0.6em;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.jtScopeServer {
+    background: rgba(0, 164, 220, 0.18);
+    color: #5ec8ea;
+}
+
+.jtScopeBrowser {
+    background: rgba(255, 193, 7, 0.18);
+    color: #ffd873;
+}
+
+.jtLegendBox {
+    display: block;
+}
+
+.jtLegendItem {
+    font-size: 0.9em;
+    opacity: 0.9;
+    line-height: 1.5;
+}
+
+textarea#ForceCustomCss {
+    width: 100%;
+}
+
+.jtMasterSwitchBox .checkboxContainer {
+    margin-bottom: 0em;
+}
+
+.jtHeaderRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+.jtHeaderTitleRow {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.jtSearchContainer {
+    min-width: 220px;
+    max-width: 320px;
+    flex: 1;
+}
+
+.jtSearchInputWrap {
+    position: relative;
+}
+
+/* emby-input's own createdCallback always inserts an empty <label> right before the
+   input, even with no label attribute -- it still takes up layout height, which throws
+   off the top:50% centering of the icon/count/clear overlaid on top of the input. */
+.jtSearchInputWrap label.inputLabel:empty {
+    display: none;
+}
+
+.jtSearchInputWrap input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.5em 4.6em 0.5em 2.2em !important;
+    border-radius: 999px;
+}
+
+.jtSearchIcon {
+    position: absolute;
+    left: 0.7em;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.6;
+    font-size: 18px !important;
+    pointer-events: none;
+}
+
+.jtSearchResults {
+    display: none;
+    position: absolute;
+    right: 2.3em;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.75em;
+    opacity: 0.65;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.jtSearchClear {
+    display: none;
+    position: absolute;
+    right: 0.5em;
+    top: 50%;
+    transform: translateY(-50%);
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 0.75em;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.jtSearchClear.jtShow {
+    display: flex;
+}
+
+.jtSearchClear:hover {
+    background: #dc3545;
+}
+
+.jtSearchMatch {
+    outline: 2px solid #ffc107;
+    outline-offset: 4px;
+    border-radius: 4px;
+    transition: outline-color 0.2s ease;
 }

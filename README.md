@@ -5,6 +5,7 @@ Jellyfin Tweaks - Jellyfin Plugin
   <img src="https://img.shields.io/github/last-commit/n00bcodr/JellyfinTweaks/main?logo=semantic-release&logoColor=white&label=Last%20Updated&labelColor=black&color=AA5CC3&cacheSeconds=3600" alt="Last Updated">
   <img src="https://img.shields.io/github/commit-activity/w/n00bcodr/JellyfinTweaks?logo=git&label=Commit%20Activity&labelColor=black&color=00A4DC&cacheSeconds=600" alt="Commit Activity">
   <img src="https://img.shields.io/badge/Jellyfin%20Version-10.11, 12-AA5CC3?logo=jellyfin&logoColor=00A4DC&labelColor=black" alt="Jellyfin Version">
+  <a href="https://github.com/n00bcodr/JellyfinTweaks/actions/workflows/check-upstream-settings.yml"><img src="https://img.shields.io/github/actions/workflow/status/n00bcodr/JellyfinTweaks/check-upstream-settings.yml?branch=main&logo=githubactions&logoColor=white&label=Upstream%20Drift%20Check&labelColor=black&color=00A4DC" alt="Upstream Drift Check"></a>
   <br>  <br>
   <img alt="GitHub Downloads" src="https://img.shields.io/github/downloads/n00bcodr/JellyfinTweaks/latest/Jellyfin.Plugin.JellyTweaks_10.11.0.zip?displayAssetName=false&label=10.11%20Downloads%40Latest&labelColor=black&color=00A4DC&cacheSeconds=60">
   <img alt="GitHub Downloads" src="https://img.shields.io/github/downloads/n00bcodr/JellyfinTweaks/latest/Jellyfin.Plugin.JellyTweaks_12.0.0.zip?displayAssetName=false&label=12%20Downloads%40Latest&labelColor=black&color=AA5CC3&cacheSeconds=60">

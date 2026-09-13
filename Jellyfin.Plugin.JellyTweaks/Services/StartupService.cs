@@ -47,7 +47,7 @@ namespace Jellyfin.Plugin.JellyTweaks.Services
                 CleanupOldScript();
 
                 var config = JellyTweaks.Instance?.Configuration;
-                if (config != null && config.DisableScriptInjectionMiddleware)
+                if (config != null && !config.DisableAllTweaks && config.DisableScriptInjectionMiddleware)
                 {
                     RegisterFileTransformation();
                 }
