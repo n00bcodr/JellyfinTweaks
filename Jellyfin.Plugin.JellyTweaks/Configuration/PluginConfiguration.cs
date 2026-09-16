@@ -22,7 +22,8 @@ public class PluginConfiguration : BasePluginConfiguration
         ForceDisableNextVideoInfo = null;
         ForceEnableRewatchingInNextUp = null;
         ForceEnableEpisodeImagesInNextUp = null;
-        DisplayMode = "";
+        DesktopDisplayMode = "";
+        MobileDisplayMode = "";
         MaxVideoWidth = 0;
         LimitSupportedVideoResolution = false;
         ForceEnablePgsSubtitleRendering = null;
@@ -118,7 +119,8 @@ public class PluginConfiguration : BasePluginConfiguration
     public bool? ForceDisableNextVideoInfo { get; set; }
     public bool? ForceEnableRewatchingInNextUp { get; set; }
     public bool? ForceEnableEpisodeImagesInNextUp { get; set; }
-    public string DisplayMode { get; set; }
+    public string DesktopDisplayMode { get; set; }
+    public string MobileDisplayMode { get; set; }
     public int MaxVideoWidth { get; set; }
     public bool LimitSupportedVideoResolution { get; set; }
     public bool? ForceEnablePgsSubtitleRendering { get; set; }

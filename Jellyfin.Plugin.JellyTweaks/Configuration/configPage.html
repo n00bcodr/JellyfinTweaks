@@ -91,19 +91,27 @@
                     <hr/>
                     <h3 class="jtSubHeading">Display</h3>
                     <div class="inputContainer">
-                        <label class="inputLabel inputLabelUnfocused" for="DisplayMode">Display Mode <span class="jtScopeBadge jtScopeBrowser">Browser</span></label>
-                        <select id="DisplayMode" is="emby-select" name="DisplayMode">
+                        <label class="inputLabel inputLabelUnfocused" for="DesktopDisplayMode">Display Mode (Desktop) <span class="jtScopeBadge jtScopeBrowser">Browser</span></label>
+                        <select id="DesktopDisplayMode" is="emby-select" name="DesktopDisplayMode">
                             <option value="">Don't manage</option>
                             <option value="auto">Auto</option>
-                            <option value="desktop">Desktop</option>
-                            <option value="desktop-legacy" data-min-major="12">Desktop (Legacy)</option>
                             <option value="modern" data-min-major="12">Modern (Jellyfin 12+)</option>
-                            <option value="mobile">Mobile</option>
-                            <option value="mobile-legacy" data-min-major="12">Mobile (Legacy)</option>
+                            <option value="legacy" data-min-major="12">Legacy</option>
                             <option value="tv">TV</option>
                             <option value="experimental" data-max-major="11">Experimental (Jellyfin 10.x)</option>
                         </select>
-                        <div class="fieldDescription">Select the layout style you want for the interface, for all users. <br/>Changes take effect after reloading the web client. <br/>Options are filtered to match your server's Jellyfin version.</div>
+                    </div>
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="MobileDisplayMode">Display Mode (Mobile) <span class="jtScopeBadge jtScopeBrowser">Browser</span></label>
+                        <select id="MobileDisplayMode" is="emby-select" name="MobileDisplayMode">
+                            <option value="">Don't manage</option>
+                            <option value="auto">Auto</option>
+                            <option value="modern" data-min-major="12">Modern (Jellyfin 12+)</option>
+                            <option value="legacy" data-min-major="12">Legacy</option>
+                            <option value="tv">TV</option>
+                            <option value="experimental" data-max-major="11">Experimental (Jellyfin 10.x)</option>
+                        </select>
+                        <div class="fieldDescription">Override the default display mode for each device type. <br/>Changes take effect after reloading the web client. Options are filtered to match your server's Jellyfin version.</div>
                     </div>
                     <div class="inputContainer">
                         <label class="inputLabel inputLabelUnfocused" for="ForceAppTheme">Theme <span class="jtScopeBadge jtScopeBrowser">Browser</span></label>
@@ -1307,8 +1315,11 @@
             // Version-gated Display Mode options
             // Filters the dropdown to the server's major version. A previously-saved
             // value stays selectable even if out of range, so saving never discards it.
-            function applyDisplayModeVersionGating(serverMajorVersion, currentValue) {
-                var select = document.querySelector('#DisplayMode');
+            function applyDisplayModeVersionGating(selectId, serverMajorVersion, currentValue) {
+                var select = document.querySelector('#' + selectId);
+                if (!select) {
+                    return;
+                }
                 Array.from(select.options).forEach(function (option) {
                     if (option.value === '' || option.value === currentValue) {
                         option.hidden = false;
@@ -1989,7 +2000,8 @@
                             });
                             setFieldValue('ManageLibraryDisplay', !!(config.ManageLatestItemsExcludes || config.ManageMyMediaExcludes));
                             loadHomeSections(config.HomeSections || []);
-                            setFieldValue('DisplayMode', config.DisplayMode || '');
+                            setFieldValue('DesktopDisplayMode', config.DesktopDisplayMode || '');
+                            setFieldValue('MobileDisplayMode', config.MobileDisplayMode || '');
                             setFieldValue('MaxVideoWidth', config.MaxVideoWidth || 0);
                             setFieldValue('LimitSupportedVideoResolution', config.LimitSupportedVideoResolution);
                             loadSubtitleAppearance(config.SubtitleAppearance);
@@ -2004,10 +2016,8 @@
 
                         withTimeout(getServerMajorVersion(), 8000, null).then(function (serverMajorVersion) {
                             try {
-                                var displayModeSelect = getFieldEl('DisplayMode');
-                                if (displayModeSelect) {
-                                    applyDisplayModeVersionGating(serverMajorVersion, config.DisplayMode || '');
-                                }
+                                applyDisplayModeVersionGating('DesktopDisplayMode', serverMajorVersion, config.DesktopDisplayMode || '');
+                                applyDisplayModeVersionGating('MobileDisplayMode', serverMajorVersion, config.MobileDisplayMode || '');
                             } catch (error) {
                                 console.error('[JellyTweaks] Failed to apply Display Mode version gating:', error);
                             }
@@ -2115,7 +2125,8 @@
                     var config = {
                         DefaultLibraryPageSize: parseInt(getFieldValue('DefaultLibraryPageSize', 0), 10) || 0,
                         MaxDaysNextUp: getFieldValue('MaxDaysNextUp', '') === '' ? null : parseInt(getFieldValue('MaxDaysNextUp', 0), 10),
-                        DisplayMode: getFieldValue('DisplayMode', '') || '',
+                        DesktopDisplayMode: getFieldValue('DesktopDisplayMode', '') || '',
+                        MobileDisplayMode: getFieldValue('MobileDisplayMode', '') || '',
                         MaxVideoWidth: parseInt(getFieldValue('MaxVideoWidth', 0), 10) || 0,
                         LimitSupportedVideoResolution: !!getFieldValue('LimitSupportedVideoResolution', false)
                     };

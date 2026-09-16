@@ -9,6 +9,21 @@
         localStorage.setItem(`${userId}-${key}`, value);
     }
 
+    // Ported from jellyfin-web's own isMobile() (scripts/browser.js).
+    function isMobileDevice() {
+        var ua = (navigator.userAgent || '').toLowerCase();
+        var terms = ['mobi', 'ipad', 'iphone', 'ipod', 'silk', 'gt-p1000', 'nexus 7', 'kindle fire', 'opera mini'];
+        return terms.some(function (term) {
+            return ua.indexOf(term) !== -1;
+        });
+    }
+
+    // 'legacy' isn't a real jellyfin-web value -- it picks desktop-legacy/mobile-legacy
+    // per device, the same way jellyfin-web's own 'modern' auto-picks its sub-flag.
+    function resolveDisplayMode(mode, mobile) {
+        return mode === 'legacy' ? (mobile ? 'mobile-legacy' : 'desktop-legacy') : mode;
+    }
+
     function runTweaks(userId) {
         console.log(`[JellyTweaks] User ID found: ${userId}. Applying settings...`);
         ApiClient.ajax({
@@ -115,9 +130,11 @@
                 setStorageItem(userId, 'customCss', config.ForceCustomCss);
             }
 
-            // Empty string means "unmanaged".
-            if (config.DisplayMode) {
-                localStorage.setItem('layout', config.DisplayMode);
+            // Empty string means "unmanaged". Each device applies only its own field.
+            var mobile = isMobileDevice();
+            var displayMode = mobile ? config.MobileDisplayMode : config.DesktopDisplayMode;
+            if (displayMode) {
+                localStorage.setItem('layout', resolveDisplayMode(displayMode, mobile));
             }
             if (config.MaxVideoWidth != null) {
                 localStorage.setItem('maxVideoWidth', config.MaxVideoWidth);
