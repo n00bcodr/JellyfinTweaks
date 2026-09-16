@@ -92,18 +92,27 @@
                     <h3 class="jtSubHeading">Display</h3>
                     <div class="inputContainer">
                         <label class="inputLabel inputLabelUnfocused" for="DisplayMode">Display Mode <span class="jtScopeBadge jtScopeBrowser">Browser</span></label>
-                        <select id="DisplayMode" is="emby-select" name="DisplayMode">
-                            <option value="">Don't manage</option>
-                            <option value="auto">Auto</option>
-                            <option value="desktop">Desktop</option>
-                            <option value="desktop-legacy" data-min-major="12">Desktop (Legacy)</option>
-                            <option value="modern" data-min-major="12">Modern (Jellyfin 12+)</option>
-                            <option value="mobile">Mobile</option>
-                            <option value="mobile-legacy" data-min-major="12">Mobile (Legacy)</option>
-                            <option value="tv">TV</option>
-                            <option value="experimental" data-max-major="11">Experimental (Jellyfin 10.x)</option>
+                        <select id="DisplayMode" is="emby-select" name="DisplayMode" aria-describedby="displayModeHelp">
+                            <option value="" data-description="Leave each browser’s current layout alone. This does not restore a layout that was previously overridden.">Don't manage (keep browser choice)</option>
+                            <optgroup label="Recommended (adapt to each device)">
+                                <option value="responsive-modern" data-min-major="12" data-description="Use the modern interface, with mobile controls on phones and desktop controls on computers. Leave TV mode unchanged.">Modern (adapt to device)</option>
+                                <option value="responsive-legacy" data-min-major="12" data-description="Use the legacy interface, with mobile controls on phones and tablets and desktop controls on computers. Leave TV mode unchanged.">Legacy (adapt to device)</option>
+                            </optgroup>
+                            <optgroup label="Automatic">
+                                <option value="auto" data-description="Reset the browser to Jellyfin’s automatic layout choice. Jellyfin decides the interface and device controls; this does not force modern or legacy.">Jellyfin default (automatic)</option>
+                            </optgroup>
+                            <optgroup label="Advanced (override all browsers)">
+                                <option value="desktop" data-label-default="Desktop (force on every device)" data-label-v12="Modern desktop (force on every device)" data-description="Force desktop controls on every browser, even phones and TV browsers.">Desktop (force on every device)</option>
+                                <option value="desktop-legacy" data-min-major="12" data-description="Force the legacy desktop interface on every browser. Phones will also get desktop controls.">Legacy desktop (force on every device)</option>
+                                <option value="mobile" data-label-default="Mobile (force on every device)" data-label-v12="Modern mobile (force on every device)" data-description="Force mobile controls on every browser, even desktop computers and TV browsers.">Mobile (force on every device)</option>
+                                <option value="mobile-legacy" data-min-major="12" data-description="Force the legacy mobile interface on every browser, including desktop computers and TV browsers.">Legacy mobile (force on every device)</option>
+                                <option value="modern" data-min-major="12" data-description="Use Jellyfin’s responsive modern interface on every browser, including those currently in TV mode. Unlike the recommended option, this replaces TV controls too.">Modern (replace web TV layout)</option>
+                                <option value="tv" data-description="Force Jellyfin’s large-screen, remote-control interface on every browser, including phones and desktop computers.">TV (remote controls everywhere)</option>
+                                <option value="experimental" data-max-major="11" data-description="Select the experimental interface offered by older Jellyfin web clients on every browser, including those in TV mode.">Experimental (older web clients)</option>
+                            </optgroup>
                         </select>
-                        <div class="fieldDescription">Select the layout style you want for the interface, for all users. <br/>Changes take effect after reloading the web client. <br/>Options are filtered to match your server's Jellyfin version.</div>
+                        <div id="displayModeHelp" class="fieldDescription" aria-live="polite"></div>
+                        <div class="fieldDescription">After saving, reload each browser. A layout change may trigger one additional automatic reload.</div>
                     </div>
                     <div class="inputContainer">
                         <label class="inputLabel inputLabelUnfocused" for="ForceAppTheme">Theme <span class="jtScopeBadge jtScopeBrowser">Browser</span></label>
@@ -1304,12 +1313,23 @@
                 }
             }
 
+            function updateDisplayModeHelp() {
+                var select = document.querySelector('#DisplayMode');
+                var selected = select.options[select.selectedIndex];
+                document.querySelector('#displayModeHelp').textContent = selected ? selected.dataset.description || '' : '';
+            }
+            document.querySelector('#DisplayMode').addEventListener('change', updateDisplayModeHelp);
+            updateDisplayModeHelp();
+
             // Version-gated Display Mode options
             // Filters the dropdown to the server's major version. A previously-saved
             // value stays selectable even if out of range, so saving never discards it.
             function applyDisplayModeVersionGating(serverMajorVersion, currentValue) {
                 var select = document.querySelector('#DisplayMode');
                 Array.from(select.options).forEach(function (option) {
+                    if (option.dataset.labelDefault) {
+                        option.textContent = serverMajorVersion >= 12 ? option.dataset.labelV12 : option.dataset.labelDefault;
+                    }
                     if (option.value === '' || option.value === currentValue) {
                         option.hidden = false;
                         return;
@@ -1319,6 +1339,9 @@
                     var outOfRange = (minMajor != null && serverMajorVersion != null && serverMajorVersion < minMajor) ||
                         (maxMajor != null && serverMajorVersion != null && serverMajorVersion > maxMajor);
                     option.hidden = outOfRange;
+                });
+                Array.from(select.querySelectorAll('optgroup')).forEach(function (group) {
+                    group.hidden = Array.from(group.children).every(function (option) { return option.hidden; });
                 });
             }
 
@@ -1990,6 +2013,7 @@
                             setFieldValue('ManageLibraryDisplay', !!(config.ManageLatestItemsExcludes || config.ManageMyMediaExcludes));
                             loadHomeSections(config.HomeSections || []);
                             setFieldValue('DisplayMode', config.DisplayMode || '');
+                            updateDisplayModeHelp();
                             setFieldValue('MaxVideoWidth', config.MaxVideoWidth || 0);
                             setFieldValue('LimitSupportedVideoResolution', config.LimitSupportedVideoResolution);
                             loadSubtitleAppearance(config.SubtitleAppearance);
