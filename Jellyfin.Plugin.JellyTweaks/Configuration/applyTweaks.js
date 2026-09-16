@@ -3,19 +3,109 @@
 
     const pluginId = 'dfee3828-01df-49df-85b1-5c2b75e5ea1a';
     let checkInterval;
+    let configContext;
+
+    // Jellyfin can change ApiClient (or its server URL) without a document reload.
+    // Keep both the cached response and layout state scoped to that connection.
+    function getConfigContext() {
+        const client = window.ApiClient;
+        try {
+            const url = client.getUrl('/JellyTweaks/public-config');
+            if (!configContext || configContext.client !== client || configContext.url !== url) {
+                configContext = { client, url, promise: null, layoutChecked: false,
+                    layoutPending: false, layoutReloading: false };
+            }
+            return configContext;
+        } catch (error) {
+            return null; // Server selection may not have completed yet.
+        }
+    }
+
+    function isCurrentConfigContext(context) {
+        return getConfigContext() === context;
+    }
+
+    function getPublicConfig(context) {
+        if (!context.promise) {
+            // Promise.resolve also turns a synchronous transport error into the
+            // same bounded startup retry path as a rejected network request.
+            context.promise = Promise.resolve().then(() => context.client.ajax({
+                type: 'GET',
+                url: context.url,
+                dataType: 'json'
+            })).catch(error => {
+                context.promise = null;
+                throw error;
+            });
+        }
+        return context.promise;
+    }
+
+    // Use device signals rather than the saved layout: an earlier forced desktop
+    // setting may already have overwritten a phone's preference. Width alone is
+    // not a device signal (a narrow desktop window must remain desktop).
+    function getLayoutDevice() {
+        const ua = navigator.userAgent.toLowerCase();
+        const tv = document.documentElement.classList.contains('layout-tv') ||
+            /smart-tv|smarttv|shield|bravia|android tv|googletv|appletv|hbbtv|viera|titanos|netcast|web0s|webos|tizen|vidaa|kepler|playstation|xbox|aft[a-z]/.test(ua);
+        const mobile = /mobi|android|ipad|iphone|ipod|silk|gt-p1000|nexus 7|kindle fire|opera mini/.test(ua) ||
+            (/macintosh|mac os x/.test(ua) && navigator.maxTouchPoints > 1);
+        return { tv, mobile };
+    }
+
+    function resolveDisplayLayout(mode, stored, device) {
+        if (!mode) return null;
+        const adaptive = mode === 'responsive-modern' || mode === 'responsive-legacy';
+        if (adaptive && (stored === 'tv' || device.tv)) return null;
+        if (mode === 'responsive-modern') {
+            return 'modern';
+        }
+        if (mode === 'responsive-legacy') {
+            const base = device.mobile ? 'mobile' : 'desktop';
+            return base + '-legacy';
+        }
+        // Preserve existing explicit overrides and their saved configuration.
+        const explicit = ['auto', 'desktop', 'mobile', 'desktop-legacy',
+            'mobile-legacy', 'modern', 'experimental', 'tv'];
+        return explicit.includes(mode) ? mode : null;
+    }
+
+    function applyDisplayLayout(config) {
+        if (config.DisableAllTweaks) return false;
+        const guardKey = 'jellytweaks-layout-reload';
+        try {
+            const stored = localStorage.getItem('layout');
+            const target = resolveDisplayLayout(config.DisplayMode, stored,
+                getLayoutDevice());
+            if (target === null || stored === target) {
+                sessionStorage.removeItem(guardKey);
+                return false;
+            }
+            // Fail open when storage is blocked or silently drops writes.
+            localStorage.setItem('layout', target);
+            if (localStorage.getItem('layout') !== target) return false;
+            if (sessionStorage.getItem(guardKey) === target) return false;
+            sessionStorage.setItem(guardKey, target);
+            if (sessionStorage.getItem(guardKey) !== target) return false;
+            // Jellyfin selects its route tree at module initialization. Changing
+            // localStorage alone cannot switch the already-running application.
+            window.location.reload();
+            return true;
+        } catch (error) {
+            console.warn('[JellyTweaks] Could not apply display layout; continuing without a reload.');
+            return false;
+        }
+    }
 
     // Helper function to set a localStorage item
     function setStorageItem(userId, key, value) {
         localStorage.setItem(`${userId}-${key}`, value);
     }
 
-    function runTweaks(userId) {
+    function runTweaks(userId, context) {
         console.log(`[JellyTweaks] User ID found: ${userId}. Applying settings...`);
-        ApiClient.ajax({
-            type: 'GET',
-            url: ApiClient.getUrl('/JellyTweaks/public-config'),
-            dataType: 'json'
-        }).then(config => {
+        getPublicConfig(context).then(config => {
+            if (!isCurrentConfigContext(context) || context.client.getCurrentUserId() !== userId) return;
             console.log('[JellyTweaks] Fetched public configuration:', config);
 
             if (config.DisableAllTweaks) {
@@ -115,10 +205,6 @@
                 setStorageItem(userId, 'customCss', config.ForceCustomCss);
             }
 
-            // Empty string means "unmanaged".
-            if (config.DisplayMode) {
-                localStorage.setItem('layout', config.DisplayMode);
-            }
             if (config.MaxVideoWidth != null) {
                 localStorage.setItem('maxVideoWidth', config.MaxVideoWidth);
             }
@@ -571,11 +657,31 @@
 
     function initialize() {
         checkInterval = setInterval(() => {
-            if (typeof window.ApiClient?.getCurrentUserId === 'function') {
-                const userId = window.ApiClient.getCurrentUserId();
+            if (typeof window.ApiClient?.ajax !== 'function' ||
+                typeof window.ApiClient?.getUrl !== 'function') return;
+            const context = getConfigContext();
+            if (!context) return;
+            // Apply before login, but never reuse another server's policy or
+            // allow a late response from that server to write/reload this client.
+            if (!context.layoutChecked && !context.layoutPending) {
+                context.layoutPending = true;
+                getPublicConfig(context).then(config => {
+                    if (!isCurrentConfigContext(context)) return;
+                    context.layoutChecked = true;
+                    context.layoutReloading = applyDisplayLayout(config);
+                    if (context.layoutReloading) clearInterval(checkInterval);
+                }).catch(() => {
+                    if (isCurrentConfigContext(context)) {
+                        console.warn('[JellyTweaks] Public configuration unavailable; will retry during startup.');
+                    }
+                }).finally(() => { context.layoutPending = false; });
+            }
+            if (!context.layoutChecked || context.layoutReloading) return;
+            if (typeof context.client.getCurrentUserId === 'function') {
+                const userId = context.client.getCurrentUserId();
                 if (userId) {
                     clearInterval(checkInterval);
-                    runTweaks(userId);
+                    runTweaks(userId, context);
                 }
             }
         }, 300);
