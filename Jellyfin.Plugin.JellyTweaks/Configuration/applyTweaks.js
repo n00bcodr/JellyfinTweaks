@@ -18,6 +18,17 @@
         });
     }
 
+    // Ported from jellyfin-web's own isTv() (scripts/browser.js). TVs pick their own layout.
+    function isTvDevice() {
+        var ua = (navigator.userAgent || '').toLowerCase();
+        if (ua.indexOf('oculusbrowser') !== -1) {
+            return false;
+        }
+        return ['tv', 'viera', 'titanos', 'netcast', 'web0s', 'tizen'].some(function (term) {
+            return ua.indexOf(term) !== -1;
+        });
+    }
+
     // 'legacy' isn't a real jellyfin-web value -- it picks desktop-legacy/mobile-legacy
     // per device, the same way jellyfin-web's own 'modern' auto-picks its sub-flag.
     function resolveDisplayMode(mode, mobile) {
@@ -133,7 +144,8 @@
             // Empty string means "unmanaged". Each device applies only its own field.
             var mobile = isMobileDevice();
             var displayMode = mobile ? config.MobileDisplayMode : config.DesktopDisplayMode;
-            if (displayMode) {
+            // A desktop/mobile layout forced onto a TV breaks its remote navigation.
+            if (displayMode && !isTvDevice()) {
                 localStorage.setItem('layout', resolveDisplayMode(displayMode, mobile));
             }
             if (config.MaxVideoWidth != null) {
