@@ -274,7 +274,16 @@
             return;
         }
 
-        ApiClient.getUser(userId).then(user => {
+        // The Playlists view GUID is generated per user, so the config stores the
+        // "playlists" token instead; resolve it to this user's own view GUID.
+        const myMediaExcludesReady = hasMyMediaExcludes && (config.MyMediaExcludes || []).indexOf('playlists') !== -1
+            ? ApiClient.getUserViews({ includeHidden: true }, userId).then(result => {
+                const view = (result.Items || []).find(v => (v.CollectionType || '').toLowerCase() === 'playlists');
+                return (config.MyMediaExcludes || []).map(id => id === 'playlists' ? (view ? view.Id : null) : id).filter(Boolean);
+            }).catch(() => (config.MyMediaExcludes || []).filter(id => id !== 'playlists'))
+            : Promise.resolve(config.MyMediaExcludes || []);
+
+        Promise.all([ApiClient.getUser(userId), myMediaExcludesReady]).then(([user, myMediaExcludes]) => {
             const userConfig = user.Configuration || {};
             let changed = false;
 
@@ -322,8 +331,8 @@
                 userConfig.LatestItemsExcludes = config.LatestItemsExcludes || [];
                 changed = true;
             }
-            if (hasMyMediaExcludes && JSON.stringify(userConfig.MyMediaExcludes || []) !== JSON.stringify(config.MyMediaExcludes || [])) {
-                userConfig.MyMediaExcludes = config.MyMediaExcludes || [];
+            if (hasMyMediaExcludes && JSON.stringify(userConfig.MyMediaExcludes || []) !== JSON.stringify(myMediaExcludes)) {
+                userConfig.MyMediaExcludes = myMediaExcludes;
                 changed = true;
             }
             if (hasOrderedViews && JSON.stringify(userConfig.OrderedViews || []) !== JSON.stringify(config.OrderedViews || [])) {

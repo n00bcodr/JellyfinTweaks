@@ -1457,7 +1457,10 @@
                     }).map(function (view) {
                         var type = (view.CollectionType || '').toLowerCase();
                         // Live TV's landing key is the fixed string "livetv", not a folder GUID.
-                        return { Id: type === 'livetv' ? 'livetv' : view.Id, Name: view.Name, CollectionType: view.CollectionType || '', Type: view.Type || '' };
+                        // The Playlists view GUID is generated per user, so the admin's would
+                        // match nobody else; store a "playlists" token that applyTweaks.js
+                        // resolves to each user's own view at apply time.
+                        return { Id: type === 'livetv' || type === 'playlists' ? type : view.Id, Name: view.Name, CollectionType: view.CollectionType || '', Type: view.Type || '' };
                     });
 
                     return folders.concat(extraViews).map(function (entry) {
