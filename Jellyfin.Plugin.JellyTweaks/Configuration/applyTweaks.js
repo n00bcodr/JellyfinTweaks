@@ -418,6 +418,9 @@
         (config.LandingScreens || []).forEach(function (override) {
             if (override.LibraryId && override.Value) {
                 landingScreenOverrides[override.LibraryId] = override.Value;
+                // Jellyfin 12 Web reads the landing tab from per-user browser storage
+                // (userSettings.get('landing-' + id, false)); legacy reads the document below.
+                setStorageItem(userId, 'landing-' + override.LibraryId, override.Value);
             }
         });
 
