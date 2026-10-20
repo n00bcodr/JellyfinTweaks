@@ -8,6 +8,10 @@ namespace Jellyfin.Plugin.JellyTweaks.Configuration;
 /// </summary>
 public class PluginConfiguration : BasePluginConfiguration
 {
+    private const int HomeSectionCount = 10;
+
+    private List<string> _homeSections;
+
     /// <summary>
     ///     Initializes a new instance of the <see cref="PluginConfiguration" /> class.
     /// </summary>
@@ -86,7 +90,7 @@ public class PluginConfiguration : BasePluginConfiguration
         OrderedViews = new List<string>();
         ManageGroupedFolders = false;
         GroupedFolders = new List<string>();
-        HomeSections = new List<string> { "", "", "", "", "", "", "", "", "", "" };
+        _homeSections = new List<string>();
         LandingScreens = new List<LandingScreenOverride>();
 
         // Device Defaults
@@ -203,7 +207,22 @@ public class PluginConfiguration : BasePluginConfiguration
     public List<string> GroupedFolders { get; set; }
 
     /// <summary>The 10 configurable home screen section slots. An empty entry means "don't manage".</summary>
-    public List<string> HomeSections { get; set; }
+    public List<string> HomeSections
+    {
+        get
+        {
+            // XmlSerializer appends to the list it finds instead of replacing it, so configs
+            // saved while this defaulted to 10 empty slots hold extra leading entries on every
+            // restart. The latest save is always the last 10.
+            if (_homeSections.Count > HomeSectionCount)
+            {
+                _homeSections.RemoveRange(0, _homeSections.Count - HomeSectionCount);
+            }
+
+            return _homeSections;
+        }
+        set => _homeSections = value ?? new List<string>();
+    }
 
     /// <summary>Forced default landing tab per library (or "livetv").</summary>
     public List<LandingScreenOverride> LandingScreens { get; set; }
