@@ -274,16 +274,25 @@
             return;
         }
 
-        // The Playlists view GUID is generated per user, so the config stores the
-        // "playlists" token instead; resolve it to this user's own view GUID.
-        const myMediaExcludesReady = hasMyMediaExcludes && (config.MyMediaExcludes || []).indexOf('playlists') !== -1
-            ? ApiClient.getUserViews({ includeHidden: true }, userId).then(result => {
-                const view = (result.Items || []).find(v => (v.CollectionType || '').toLowerCase() === 'playlists');
-                return (config.MyMediaExcludes || []).map(id => id === 'playlists' ? (view ? view.Id : null) : id).filter(Boolean);
-            }).catch(() => (config.MyMediaExcludes || []).filter(id => id !== 'playlists'))
-            : Promise.resolve(config.MyMediaExcludes || []);
+        // Playlists and Live TV view GUIDs are generated per user, so the config stores
+        // "playlists"/"livetv" tokens instead; resolve them to this user's own view GUIDs.
+        const VIEW_TOKENS = ['playlists', 'livetv'];
+        const needsViews = (hasMyMediaExcludes && (config.MyMediaExcludes || []).some(id => VIEW_TOKENS.indexOf(id) !== -1)) ||
+            (hasOrderedViews && (config.OrderedViews || []).some(id => VIEW_TOKENS.indexOf(id) !== -1));
+        const viewsReady = needsViews
+            ? ApiClient.getUserViews({ includeHidden: true }, userId).then(result => result.Items || []).catch(() => [])
+            : Promise.resolve([]);
+        const resolveViewTokens = (ids, views) => (ids || []).map(id => {
+            if (VIEW_TOKENS.indexOf(id) === -1) {
+                return id;
+            }
+            const view = views.find(v => (v.CollectionType || '').toLowerCase() === id);
+            return view ? view.Id : null;
+        }).filter(Boolean);
 
-        Promise.all([ApiClient.getUser(userId), myMediaExcludesReady]).then(([user, myMediaExcludes]) => {
+        Promise.all([ApiClient.getUser(userId), viewsReady]).then(([user, views]) => {
+            const myMediaExcludes = resolveViewTokens(config.MyMediaExcludes, views);
+            const orderedViews = resolveViewTokens(config.OrderedViews, views);
             const userConfig = user.Configuration || {};
             let changed = false;
 
@@ -335,8 +344,8 @@
                 userConfig.MyMediaExcludes = myMediaExcludes;
                 changed = true;
             }
-            if (hasOrderedViews && JSON.stringify(userConfig.OrderedViews || []) !== JSON.stringify(config.OrderedViews || [])) {
-                userConfig.OrderedViews = config.OrderedViews || [];
+            if (hasOrderedViews && JSON.stringify(userConfig.OrderedViews || []) !== JSON.stringify(orderedViews)) {
+                userConfig.OrderedViews = orderedViews;
                 changed = true;
             }
             if (hasGroupedFolders && JSON.stringify(userConfig.GroupedFolders || []) !== JSON.stringify(config.GroupedFolders || [])) {

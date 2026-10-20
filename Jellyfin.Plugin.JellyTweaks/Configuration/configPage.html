@@ -1419,7 +1419,11 @@
                         var type = (view.CollectionType || '').toLowerCase();
                         return syntheticTypes[type] && !folderIds[view.Id];
                     }).map(function (view) {
-                        return { Id: view.Id, Name: view.Name, CollectionType: view.CollectionType || '' };
+                        // Playlists and Live TV view GUIDs are generated per user, so the admin's
+                        // would match nobody else; store a token that applyTweaks.js resolves to
+                        // each user's own view. RealId lets orders saved before this still load.
+                        var type = (view.CollectionType || '').toLowerCase();
+                        return { Id: type, RealId: view.Id, Name: view.Name, CollectionType: view.CollectionType || '' };
                     });
 
                     return folders.concat(synthetic);
@@ -1460,7 +1464,7 @@
                         // The Playlists view GUID is generated per user, so the admin's would
                         // match nobody else; store a "playlists" token that applyTweaks.js
                         // resolves to each user's own view at apply time.
-                        return { Id: type === 'livetv' || type === 'playlists' ? type : view.Id, Name: view.Name, CollectionType: view.CollectionType || '', Type: view.Type || '' };
+                        return { Id: type === 'livetv' || type === 'playlists' ? type : view.Id, RealId: view.Id, Name: view.Name, CollectionType: view.CollectionType || '', Type: view.Type || '' };
                     });
 
                     return folders.concat(extraViews).map(function (entry) {
@@ -1469,6 +1473,7 @@
                         var isLatest = !isMyMedia && type !== 'livetv';
                         return {
                             Id: entry.Id,
+                            RealId: entry.RealId,
                             Name: entry.Name,
                             CollectionType: type,
                             Kind: isMyMedia ? 'myMedia' : (isLatest ? 'latest' : null),
@@ -1502,7 +1507,7 @@
 
                     if (entry.Kind) {
                         var excludeSet = entry.Kind === 'myMedia' ? myMediaExcludeSet : latestExcludeSet;
-                        var checked = !excludeSet[entry.Id];
+                        var checked = !excludeSet[entry.Id] && !(entry.RealId && excludeSet[entry.RealId]);
                         var labelText = entry.Kind === 'myMedia'
                             ? 'Display on home screen'
                             : "Display in home screen sections such as 'Recently Added Media' and 'Continue Watching'";
@@ -1680,6 +1685,9 @@
                 var byId = {};
                 libraries.forEach(function (library) {
                     byId[library.Id] = library;
+                    if (library.RealId) {
+                        byId[library.RealId] = library;
+                    }
                 });
 
                 var orderedLibraries = order.map(function (id) {
